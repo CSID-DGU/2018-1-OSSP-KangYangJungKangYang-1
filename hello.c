@@ -1,10 +1,11 @@
-#include <stdio.h>
-int main()
-{
-    int i;
+#include <iostream>
 
-    for(i = 0 ; i < 3; i++)
-	printf("Kang Yang Jung Kang Yang\n");
-    
-    return 0;
+int main() {
+	int a = 1;
+	for (int i = 0; i < a; i++) {
+		cout << "Hellow World!" << endl;
+		a++;
+	}
+
+	return 0;
 }
