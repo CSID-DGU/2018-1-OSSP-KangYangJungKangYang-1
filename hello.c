@@ -2,10 +2,9 @@
 int main()
 {
     int i;
+
     for(i = 0 ; i < 3; i++)
-    {
-	printf("hello.");
-    }
-    int a; // test
+	printf("Kang Yang Jung Kang Yang\n");
+    
     return 0;
 }
