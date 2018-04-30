@@ -6,6 +6,5 @@ int main() {
 		cout << "Hellow World!" << endl;
 		a++;
 	}
-
 	return 0;
 }
