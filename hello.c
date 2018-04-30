@@ -2,6 +2,7 @@
 
 int main() {
 	int a = 1;
+<<<<<<< HEAD
 	
 	for (int i = 0; i < a; i++) {
 		cout << "Hello World!" << end;
@@ -9,5 +10,11 @@ int main() {
 		a++;
 	}
 
+=======
+	for (int i = 0; i < a; i++) {
+		cout << "Hellow World!" << endl;
+		a++;
+	}
+>>>>>>> syy
 	return 0;
 }
