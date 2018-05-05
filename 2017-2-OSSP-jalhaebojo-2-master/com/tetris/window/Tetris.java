@@ -1,5 +1,5 @@
 package com.tetris.window;
-
+//kkm
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -23,8 +23,8 @@ public class Tetris extends JFrame implements ActionListener{
 	private GameServer server;
 	private GameClient client;
 	private TetrisBoard board = new TetrisBoard(this,client);
-	private JMenuItem itemServerStart = new JMenuItem("서버로 접속하기");
-	private JMenuItem itemClientStart = new JMenuItem("클라이언트로 접속하기");
+	private JMenuItem itemServerStart = new JMenuItem("�꽌踰꾨줈 �젒�냽�븯湲�");
+	private JMenuItem itemClientStart = new JMenuItem("�겢�씪�씠�뼵�듃濡� �젒�냽�븯湲�");
 	
 	private boolean isNetwork;
 	private boolean isServer;
@@ -33,7 +33,7 @@ public class Tetris extends JFrame implements ActionListener{
 
 	public Tetris() {
 		JMenuBar mnBar = new JMenuBar();
-		JMenu mnGame = new JMenu("게임하기");
+		JMenu mnGame = new JMenu("寃뚯엫�븯湲�");
 		
 		mnGame.add(itemServerStart);
 		mnGame.add(itemClientStart);
@@ -79,9 +79,9 @@ public class Tetris extends JFrame implements ActionListener{
 		String nickName=null;
 		if(e.getSource() == itemServerStart){
 			
-			String sp = JOptionPane.showInputDialog("port번호를 입력해주세요","9500");
+			String sp = JOptionPane.showInputDialog("port踰덊샇瑜� �엯�젰�빐二쇱꽭�슂","9500");
 			if(sp!=null && !sp.equals(""))port = Integer.parseInt(sp);
-			nickName = JOptionPane.showInputDialog("닉네임을 입력해주세요","이름없음");
+			nickName = JOptionPane.showInputDialog("�땳�꽕�엫�쓣 �엯�젰�빐二쇱꽭�슂","�씠由꾩뾾�쓬");
 			
 			if(port!=0){
 				if(server == null) server = new GameServer(port);
@@ -108,10 +108,10 @@ public class Tetris extends JFrame implements ActionListener{
 				e1.printStackTrace();
 			}
 			
-			ip = JOptionPane.showInputDialog("IP를 입력해주세요.",ip);
-			String sp = JOptionPane.showInputDialog("port번호를 입력해주세요","9500");
+			ip = JOptionPane.showInputDialog("IP瑜� �엯�젰�빐二쇱꽭�슂.",ip);
+			String sp = JOptionPane.showInputDialog("port踰덊샇瑜� �엯�젰�빐二쇱꽭�슂","9500");
 			if(sp!=null && !sp.equals(""))port = Integer.parseInt(sp);
-			nickName = JOptionPane.showInputDialog("닉네임을 입력해주세요","이름없음");
+			nickName = JOptionPane.showInputDialog("�땳�꽕�엫�쓣 �엯�젰�빐二쇱꽭�슂","�씠由꾩뾾�쓬");
 
 		
 			if(ip!=null){
