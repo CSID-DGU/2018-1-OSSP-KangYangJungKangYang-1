@@ -1,7 +1,9 @@
 package com.tetris.window;
 
 import java.awt.Dimension;
+
 import java.awt.FlowLayout;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,16 +11,19 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.awt.Graphics;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
+import com.tetris.main.TetrisMain;
 import com.tetris.network.GameClient;
 import com.tetris.network.GameServer;
 
@@ -26,6 +31,7 @@ public class Tetris extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private GameServer server;
 	private GameClient client;
+	private Login login = new Login(this, client);
 	private TetrisBoard board = new TetrisBoard(this, client);
 	private JMenuItem itemServerStart = new JMenuItem("Connect with Server");
 	private JMenuItem itemClientStart = new JMenuItem("Access as a Client");
@@ -38,7 +44,7 @@ public class Tetris extends JFrame implements ActionListener {
 	private final JFrame frame;
 	private final JPanel panel;
 	private final JLabel text;
-
+	
 	public Tetris() {
 		JMenuBar mnBar = new JMenuBar();
 		JMenu mnGame = new JMenu("Connection");
@@ -51,6 +57,8 @@ public class Tetris extends JFrame implements ActionListener {
 		panel.setBorder(BorderFactory.createEmptyBorder(8, 4, 8, 4)); // 화면의 공백 상/좌/하/우
 		//frame.setLocationRelativeTo(board); // 화면이 나타날 위치 설정
 
+		
+		
 		mnGame.add(itemServerStart);
 		mnGame.add(itemClientStart);
 		mnBar.add(mnGame);
@@ -62,8 +70,10 @@ public class Tetris extends JFrame implements ActionListener {
 		this.setJMenuBar(mnBar);
 
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		this.getContentPane().add(board);
-
+		this.getContentPane().add(login);
+		
+		
+		
 		this.setResizable(false);
 		this.pack();
 		Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
@@ -148,19 +158,19 @@ public class Tetris extends JFrame implements ActionListener {
 				}
 			}
 		} else if (e.getSource() == itemGameManual) {
-			frame.setTitle("Tetris Game Manual"); // 실행되는 화면의 제목
+			frame.setTitle("Tetris Game Manual");
 
-			String contentText = // 화면에 출력되는 내용
+			String contentText =
 					"<html><body><p>"
 							+ "Left : ←<br>Right : →<br>Down : ↓<br>Rotate : ↑<br>Quick Down : Space<br>Hold : Shift"
 							+ "</p></body></html>";
 
-			text.setText(contentText); // 출력될 내용을 label 위에 저장
-			panel.add(text); // label을 panel 위에 올림
-			frame.add(panel); // panel을 frame 위에 올림
+			text.setText(contentText);
+			panel.add(text);
+			frame.add(panel);
 
-			frame.setSize(300, 200); // 화면의 크기
-			frame.setVisible(true); // about me와 software를 눌렀을 때 화면에 보이도록 설정
+			frame.setSize(300, 200);
+			frame.setVisible(true);
 		} else if (e.getSource() == itemAboutGame) {
 			frame.setTitle("About Tetris Game");
 
@@ -169,12 +179,12 @@ public class Tetris extends JFrame implements ActionListener {
 					+ "[OSSP] Kang Yang Jung Kang Yang"
 					+ "</p></body></html>";
 
-			text.setText(contentText); // 출력될 내용을 label 위에 저장
-			panel.add(text); // label을 panel 위에 올림
-			frame.add(panel); // panel을 frame 위에 올림
+			text.setText(contentText);
+			panel.add(text);
+			frame.add(panel);
 
-			frame.setSize(300, 150); // 화면의 크기
-			frame.setVisible(true); // about me와 software를 눌렀을 때 화면에 보이도록 설정
+			frame.setSize(300, 150);
+			frame.setVisible(true);
 		}
 	}
 
@@ -186,7 +196,47 @@ public class Tetris extends JFrame implements ActionListener {
 		board.setPlay(false);
 		board.setClient(null);
 	}
-
+	
+	public void user_Login() {
+		this.getContentPane().remove(login);
+		this.getContentPane().add(board);
+		this.revalidate();
+		this.repaint();
+		
+		String ip = null;
+		int port = 0;
+		String id = login.getId();
+		try {
+			ip = InetAddress.getLocalHost().getHostAddress();
+			port = 9500;
+		} catch (UnknownHostException e1) {
+			e1.printStackTrace();
+		}
+		
+		if (port != 0) {
+			if (server == null)
+				server = new GameServer(port);
+			server.startServer();
+			try {
+				ip = InetAddress.getLocalHost().getHostAddress();
+			} catch (UnknownHostException e1) {
+				e1.printStackTrace();
+			}
+			if (ip != null) {
+				client = new GameClient(this, ip, port, id);
+				if (client.start()) {
+					itemServerStart.setEnabled(false);
+					itemClientStart.setEnabled(false);
+					board.setClient(client);
+					board.getBtnStart().setEnabled(true);
+					board.startNetworking(ip, port, id);
+					isNetwork = true;
+					isServer = true;
+				}
+			}
+		}
+	}
+	
 	public JMenuItem getItemServerStart() {
 		return itemServerStart;
 	}

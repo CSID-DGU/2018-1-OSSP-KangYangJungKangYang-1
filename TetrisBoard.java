@@ -77,6 +77,7 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 	private int removeLineCount = 0;
 	private int removeLineCombo = 0;
 	private int score = 0;
+	private int speed = 1;
 	
 	public TetrisBoard(Tetris tetris, GameClient client) {
 		this.tetris = tetris;
@@ -293,7 +294,7 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 	
 	@Override
 	public void run() {
-		int countMove = (21-(int)comboSpeed.getSelectedItem())*5;
+		int countMove = (21-speed)*5;
 		int countDown = 0;
 		int countUp = up;
 		
@@ -316,7 +317,7 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 			
 			countMove--;
 			if (countMove == 0) {
-				countMove = (21-(int)comboSpeed.getSelectedItem())*5;
+				countMove = (21-speed)*5;
 				if (controller != null && !controller.moveDown()) countDown = down;
 				else this.showGhost();
 			}
@@ -481,6 +482,7 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 				this.removeBlockLine(mainBlock.getY());
 				isCombo = true;
 				score+=10;
+				speed=score/100+1;
 				client.reAddScore(score);
 				client.addScore();
 			}
