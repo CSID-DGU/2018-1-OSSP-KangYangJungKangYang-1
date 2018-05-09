@@ -45,10 +45,11 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 	private final int MESSAGE_X = 2;
 	private final int MESSAGE_WIDTH = BLOCK_SIZE * (7 + minX);
 	private final int MESSAGE_HEIGHT = BLOCK_SIZE * (6 + minY);
-	private final int PANEL_WIDTH = maxX*BLOCK_SIZE + MESSAGE_WIDTH + BOARD_X;
+	private final int PANEL_WIDTH = maxX*BLOCK_SIZE + MESSAGE_WIDTH + BOARD_X; 
 	private final int PANEL_HEIGHT = maxY*BLOCK_SIZE + MESSAGE_HEIGHT + BOARD_Y;
 	
-	private SystemMessageArea systemMsg = new SystemMessageArea(BLOCK_SIZE*1,BOARD_Y + BLOCK_SIZE + BLOCK_SIZE*7, BLOCK_SIZE*5, BLOCK_SIZE*12);
+	//private SystemMessageArea systemMsg = new SystemMessageArea(BLOCK_SIZE*1,BOARD_Y + BLOCK_SIZE + BLOCK_SIZE*7, BLOCK_SIZE*5, BLOCK_SIZE*12);
+	private SystemMessageArea systemMsg = new SystemMessageArea(BLOCK_SIZE*1,BOARD_Y + 150 + BLOCK_SIZE + BLOCK_SIZE*7, BLOCK_SIZE*5, BLOCK_SIZE*4); // Sys 영역 상하 크기 축소
 	private MessageArea messageArea = new MessageArea(this,2, PANEL_HEIGHT - (MESSAGE_HEIGHT-MESSAGE_X), PANEL_WIDTH-BLOCK_SIZE*7-2, MESSAGE_HEIGHT-2);
 	private JButton btnStart = new JButton("START");
 	private JButton btnExit = new JButton("EXIT");
@@ -210,6 +211,9 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 		g.setColor(Color.WHITE);
 		g.drawString("H O L D", BLOCK_SIZE + 12, BOARD_Y + BLOCK_SIZE + BLOCK_SIZE*5 + 20);
 		g.drawString("N E X T", BOARD_X + BLOCK_SIZE + (maxX+1)*BLOCK_SIZE+1 + 12, BOARD_Y + BLOCK_SIZE + BLOCK_SIZE*5 + 20);
+		//ITEM 출력 
+		g.setColor(Color.YELLOW);
+		g.drawString("I T E M", BLOCK_SIZE + 12, 350);
 		g.setFont(font);
 		
 		//그리드 표시
