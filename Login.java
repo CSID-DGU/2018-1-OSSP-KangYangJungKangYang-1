@@ -14,18 +14,14 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
-import java.awt.Desktop;
-import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
-import java.net.URI;
-import java.net.URISyntaxException;
+import javax.swing.ImageIcon;
 
 import com.tetris.main.TetrisMain;
 import com.tetris.network.GameClient;
@@ -50,7 +46,7 @@ public class Login extends JPanel implements Runnable, KeyListener, MouseListene
 	private final int PANEL_HEIGHT = maxY*BLOCK_SIZE + MESSAGE_HEIGHT + BOARD_Y;
 	
 	private JTextField id_area = new JTextField(10);
-	private JPasswordField pw_area = new JPasswordField(10);
+	private JTextField pw_area = new JTextField(10);
 	private JLabel title_label = new JLabel("Login");
 	private JLabel id_label = new JLabel("ID");
 	private JLabel pw_label = new JLabel("PW");
@@ -77,6 +73,7 @@ public class Login extends JPanel implements Runnable, KeyListener, MouseListene
 		pw_area.setBounds(PANEL_WIDTH - 400, PANEL_HEIGHT - 350, 200, 30);
 		btnLogin.setBounds(PANEL_WIDTH - 200, PANEL_HEIGHT - 400, 150, 80);
 		btnLogin.setFocusable(false);
+		//btnLogin.setEnabled(false);
 		btnLogin.addActionListener(this);
 		btnJoin.setBounds(PANEL_WIDTH - 350, PANEL_HEIGHT - 300, 150, 50);
 		btnJoin.setFocusable(false);	
@@ -99,6 +96,8 @@ public class Login extends JPanel implements Runnable, KeyListener, MouseListene
 		this.add(id_label);
 		this.add(pw_label);
 		
+		//if(id_area.getText() != "" && pw_area.getText() != "")
+		//	btnLogin.setEnabled(true);
 		
 	}
 
@@ -118,9 +117,22 @@ public class Login extends JPanel implements Runnable, KeyListener, MouseListene
 	
 	
 	
-	
+	/*public void paint(Graphics g) {
+		background = createImage(500,500);
+		screenGraphic = background.getGraphics();
+		screenDraw(screenGraphic);
+		g.drawImage(background, 0, 0, null);
+	}
 
-	public String getId() {	return id;	}
+	public void screenDraw(Graphics g) {
+		g.drawImage(background, 0, 0, null);
+		paintComponents(g);
+		this.repaint();
+	}*/
+
+	public String getId() {
+		return id;
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -133,12 +145,6 @@ public class Login extends JPanel implements Runnable, KeyListener, MouseListene
 			}else{
 				
 			}
-		}else if(e.getSource() == btnJoin){
-			try {
-				Desktop.getDesktop().browse(new URI("http://google.com"));
-			} catch (IOException | URISyntaxException e2) {
-				e2.printStackTrace();
-			}			
 		}else if(e.getSource() == btnExit){
 			
 			if(client!=null ){
@@ -153,29 +159,56 @@ public class Login extends JPanel implements Runnable, KeyListener, MouseListene
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent arg0) {}
+	public void mouseClicked(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
-	public void mouseEntered(MouseEvent arg0) {}
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
-	public void mouseExited(MouseEvent arg0) {}
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
-	public void mousePressed(MouseEvent arg0) {}
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
-	public void mouseReleased(MouseEvent arg0) {}
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
-	public void keyPressed(KeyEvent arg0) {}
+	public void keyPressed(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
-	public void keyReleased(KeyEvent arg0) {}
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
-	public void keyTyped(KeyEvent arg0) {}
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
-	public void run() {	}
+	public void run() {
+		// TODO Auto-generated method stub
+		
+	}
 }
