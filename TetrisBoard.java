@@ -7,6 +7,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -25,10 +27,11 @@ import com.tetris.shape.Line;
 import com.tetris.shape.Nemo;
 import com.tetris.shape.RightTwoUp;
 import com.tetris.shape.RightUp;
+import java.sql.*;
 
 public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseListener, ActionListener{
 	private static final long serialVersionUID = 1L;
-	
+
 	private Tetris tetris;
 	private GameClient client;
 
@@ -36,7 +39,7 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 	public static final int BOARD_X = 120;
 	public static final int BOARD_Y = 50;
 	private int minX=1, minY=0, maxX=10, maxY=21, down=50, up=0;
-	
+
 	private final int MESSAGE_X = 2;
 	private final int MESSAGE_WIDTH = BLOCK_SIZE * (7 + minX);
 	private final int MESSAGE_HEIGHT = BLOCK_SIZE * (6 + minY);
@@ -61,7 +64,7 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 	private JCheckBox checkGrid  = new JCheckBox("Show grid",true);
 	private Integer[] lv = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
 	private JComboBox<Integer> comboSpeed = new JComboBox<Integer>(lv);
-	
+
 	private String ip;
 	private int port;
 	private String nickName;
@@ -74,7 +77,7 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 	private Block[][] map;
 	private TetrisController controller;
 	private TetrisController controllerGhost;
-	
+
 	private boolean isPlay = false;
 	private boolean isHold = false;
 	private boolean usingGhost = true;
@@ -83,7 +86,7 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 	private int removeLineCombo = 0;
 	private int score = 0;
 	private int speed = 1;
-	
+
 	public TetrisBoard(Tetris tetris, GameClient client) {
 		this.tetris = tetris;
 		this.client = client;
@@ -92,13 +95,13 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 		this.addMouseListener(this);
 		this.setLayout(null);
 		this.setFocusable(true);
-		
+
 		btnStart.setBounds(PANEL_WIDTH - BLOCK_SIZE*7, PANEL_HEIGHT - messageArea.getHeight(), BLOCK_SIZE*7, messageArea.getHeight()/2);
 		btnStart.setFocusable(false);
 		btnStart.setEnabled(false);
 		btnStart.addActionListener(this);
 		btnBack.setBounds(PANEL_WIDTH - BLOCK_SIZE*7, PANEL_HEIGHT - messageArea.getHeight()/2, BLOCK_SIZE*7, messageArea.getHeight()/2);
-		btnBack.setFocusable(false);	
+		btnBack.setFocusable(false);
 		btnBack.addActionListener(this);
 		checkGhost.setBounds(PANEL_WIDTH - BLOCK_SIZE*7+35,5,95,20);
 		checkGhost.setBackground(new Color(0,0,0)); //  (GHOST)
@@ -126,16 +129,16 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 		});
 		comboSpeed.setBounds(PANEL_WIDTH - BLOCK_SIZE*8, 5, 45, 20);
 		this.add(comboSpeed);
-		
+
 		this.add(systemMsg);
 		this.add(messageArea);
-		this.add(btnStart);		
+		this.add(btnStart);
 		this.add(btnBack);
 		this.add(checkGhost);
 		this.add(checkGrid);
-		
+
 	}
-	
+
 	public void startNetworking(String ip, int port, String nickName){
 		this.ip = ip;
 		this.port = port;
@@ -143,11 +146,11 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 		this.repaint();
 	}
 
-	
+
 	public void gameStart(int speed){
 		comboSpeed.setSelectedItem(new Integer(speed));
 		if(th!=null){
-			try {isPlay = false;th.join();} 
+			try {isPlay = false;th.join();}
 			catch (InterruptedException e) {e.printStackTrace();}
 		}
 
@@ -171,24 +174,24 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 		th = new Thread(this);
 		th.start();
 	}
-	
-	
+
+
 	//TODO : paint
 	@Override
 	protected void paintComponent(Graphics g) {
 		g.clearRect(0, 0, this.getWidth(), this.getHeight()+1);
-		
+
 
 		g.setColor(new Color(0,0,0));
 		g.fillRect(0, 0, (maxX+minX+13)*BLOCK_SIZE+1, BOARD_Y);
-		
+
 		g.setColor(new Color(0,0,0));
 		g.fillRect(0, BOARD_Y, (maxX+minX+13)*BLOCK_SIZE+1, maxY*BLOCK_SIZE+1);
 		g.setColor(Color.WHITE); // (ip, port, ID, Speed)
-				
+
 		//IP
 		g.drawString("ip : "+ip+"     port : "+port, 20, 20);
-		
+
 		//NickName
 		g.drawString("ID : "+nickName+"     score : "+score, 20, 40);
 
@@ -196,14 +199,14 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 		g.setFont(new Font("Dialog", Font.BOLD,13));
 		g.drawString("Speed", PANEL_WIDTH - BLOCK_SIZE*10, 20);
 		g.setFont(font);
-		
+
 		g.setColor(new Color(0,0,0));
 		//g.setColor(Color.BLACK);
 		g.fillRect(BOARD_X + BLOCK_SIZE*minX, BOARD_Y, maxX*BLOCK_SIZE+1, maxY*BLOCK_SIZE+1);
 		g.fillRect(BLOCK_SIZE*minX ,BOARD_Y + BLOCK_SIZE, BLOCK_SIZE*5,BLOCK_SIZE*5);
 		g.fillRect(BOARD_X + BLOCK_SIZE*minX + (maxX+1)*BLOCK_SIZE+1,BOARD_Y + BLOCK_SIZE, BLOCK_SIZE*5,BLOCK_SIZE*5);
 		g.fillRect(BOARD_X + BLOCK_SIZE*minX + (maxX+1)*BLOCK_SIZE+1,BOARD_Y + BLOCK_SIZE + BLOCK_SIZE*7, BLOCK_SIZE*5,BLOCK_SIZE*12);
-		
+
 		//HOLD  NEXT
 		g.setFont(new Font(font.getFontName(),font.getStyle(),20));
 		g.setColor(Color.WHITE);
@@ -218,9 +221,9 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 			for(int i=1;i<5;i++) g.drawLine(BLOCK_SIZE*minX ,BOARD_Y + BLOCK_SIZE*(i+1), BLOCK_SIZE*(minX+5)-1,BOARD_Y + BLOCK_SIZE*(i+1));
 			for(int i=1;i<5;i++) g.drawLine(BLOCK_SIZE*(minY+i+1) ,BOARD_Y + BLOCK_SIZE, BLOCK_SIZE*(minY+i+1),BOARD_Y + BLOCK_SIZE*(minY+6)-1);
 			for(int i=1;i<5;i++) g.drawLine(BOARD_X + BLOCK_SIZE*minX + (maxX+1)*BLOCK_SIZE+1, BOARD_Y + BLOCK_SIZE*(i+1), BOARD_X + BLOCK_SIZE*minX + (maxX+1)*BLOCK_SIZE+BLOCK_SIZE*5,BOARD_Y + BLOCK_SIZE*(i+1));
-			for(int i=1;i<5;i++) g.drawLine(BOARD_X + BLOCK_SIZE*minX + (maxX+1+i)*BLOCK_SIZE+1, BOARD_Y + BLOCK_SIZE, BOARD_X + BLOCK_SIZE*minX + BLOCK_SIZE+BLOCK_SIZE*(10+i)+1,BOARD_Y + BLOCK_SIZE*6-1);	
+			for(int i=1;i<5;i++) g.drawLine(BOARD_X + BLOCK_SIZE*minX + (maxX+1+i)*BLOCK_SIZE+1, BOARD_Y + BLOCK_SIZE, BOARD_X + BLOCK_SIZE*minX + BLOCK_SIZE+BLOCK_SIZE*(10+i)+1,BOARD_Y + BLOCK_SIZE*6-1);
 		}
-		
+
 		int x=0,y=0,newY=0;
 		if(hold!=null){
 			x=0; y=0; newY=3;
@@ -232,7 +235,7 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 			hold.setPosX(x);
 			hold.setPosY(y);
 		}
-		
+
 		if(nextBlocks!=null){
 			x=0; y=0; newY=3;
 			for(int i = 0 ; i<nextBlocks.size() ; i++){
@@ -248,7 +251,7 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 				newY+=3;
 			}
 		}
-		
+
 		if(blockList!=null){
 			x=0; y=0;
 			for(int i = 0 ; i<blockList.size() ; i++){
@@ -276,7 +279,7 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 				ghost.setPosY(y);
 			}
 		}
-		
+
 		if(shap!=null){
 			x=0; y=0;
 			x = shap.getPosX();
@@ -288,37 +291,37 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 			shap.setPosY(y);
 		}
 	}
-	
+
 	@Override
 	public void run() {
 		int countMove = (21-speed)*5;
 		int countDown = 0;
 		int countUp = up;
-		
+
 		while(isPlay){
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			
+
 			if(countDown!=0){
 				countDown--;
 				if(countDown==0){
-					
+
 					if(controller!=null && !controller.moveDown()) this.fixingTetrisBlock();
 				}
 				this.repaint();
 				continue;
 			}
-			
+
 			countMove--;
 			if (countMove == 0) {
 				countMove = (21-speed)*5;
 				if (controller != null && !controller.moveDown()) countDown = down;
 				else this.showGhost();
 			}
-			
+
 			if (countUp != 0) {
 				countUp--;
 				if (countUp == 0) {
@@ -326,15 +329,15 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 					addBlockLine(1);
 				}
 			}
-			
+
 			this.repaint();
 		}//while()
 	}//run()
 
-	
+
 	/**
 	 *
-	 * @param lineNumber	
+	 * @param lineNumber
 	 * @param num -1 or 1
 	 */
 	public void dropBoard(int lineNumber, int num){
@@ -347,8 +350,8 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 
 		this.showGhost();
 	}
-	
-	
+
+
 	/**
 	 * lineNumber
 	 * @param lineNumber
@@ -378,13 +381,13 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 			}
 		}
 	}
-	
-	
+
+
 	/**
 	 * lineNumber
-	 * @param lineNumber 
+	 * @param lineNumber
 	 * @param num
-	 */	
+	 */
 	private void changeTetrisBlockLine(int lineNumber, int num){
 		int y=0, posY=0;
 		for(int i=0 ; i<blockList.size() ; i++){
@@ -405,15 +408,15 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 				}
 			}
 		}
-		
+
 		boolean isCombo = false;
 		removeLineCount = 0;
-		
+
 		// drawList
 		for (Block block : shap.getBlock()) {
 			blockList.add(block);
 		}
-		
+
 		// check
 		isCombo = checkMap();
 
@@ -426,23 +429,23 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 
 		isHold = false;
 	}//fixingTetrisBlock()
-	
-	
+
+
 	/**
-	 * 
+	 *
 	 * @return true-, false-
 	 */
 	private boolean checkMap(){
 		boolean isCombo = false;
 		int count = 0;
 		Block mainBlock;
-		
+
 		for(int i=0 ; i<blockList.size() ;i++){
 			mainBlock = blockList.get(i);
 
 			if(mainBlock.getY()<0 || mainBlock.getY() >=maxY) continue;
-			
-			if(mainBlock.getY()<maxY && mainBlock.getX()<maxX) 
+
+			if(mainBlock.getY()<maxY && mainBlock.getX()<maxX)
 				map[mainBlock.getY()][mainBlock.getX()] = mainBlock;
 
 			if (mainBlock.getY() == 1 && mainBlock.getX() > 2 && mainBlock.getX() < 7) {
@@ -453,7 +456,7 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 			count = 0;
 			for (int j = 0; j < maxX; j++) {
 				if(map[mainBlock.getY()][j] != null) count++;
-				
+
 			}
 
 			if (count == maxX) {
@@ -468,7 +471,7 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 		}
 		return isCombo;
 	}
-	
+
 
 	public void nextTetrisBlock(){
 		shap = nextBlocks.get(0);
@@ -481,8 +484,8 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 		ghost = getBlockClone(shap,true);
 		controllerGhost.setBlock(ghost);
 	}
-	
-	
+
+
 	/**
 	 * lineNumber , drawlist
 	 * @param lineNumber
@@ -500,38 +503,87 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 
 		this.dropBoard(lineNumber,1);
 	}
-	
-	
+
+
 
 	public void gameEndCallBack(){
+		String end_id = this.nickName;
+		String end_score = Integer.toString(this.score);
+
+		Connection connection = null;
+		Statement st = null;
+		String line = "";
+		String[] info = null;
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader("D:\\url.txt"));
+			while((line = reader.readLine())!=null) {
+				info = line.split(",");
+			}
+			reader.close();
+		}catch (Exception fe){
+			fe.printStackTrace();
+		}
+
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			connection = DriverManager.getConnection(info[0],info[1],info[2]);
+
+			System.out.println("Connection Success");
+			String sql;
+			sql = "UPDATE user_info set SCORE=? WHERE ID =?;";
+			PreparedStatement pstmt = connection.prepareStatement(sql);
+
+			pstmt.setString(1, end_score);
+			pstmt.setString(2, end_id);
+			//ResultSet rs = st.executeQuery(sql);
+			pstmt.executeUpdate();
+			connection.close();
+		}
+		catch(SQLException se1)
+		{
+			se1.printStackTrace();
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}finally {
+			try {
+				if(connection != null)
+				{
+					connection.close();
+				}
+			}catch(Exception ex)
+			{}
+		}
+
 		client.gameover();
 		this.isPlay = false;
 	}
-	
-	
+
+
 
 	private void showGhost(){
 		ghost = getBlockClone(shap,true);
 		controllerGhost.setBlock(ghost);
 		controllerGhost.moveQuickDown(shap.getPosY(), true);
-	}	
-	
-	
+	}
+
+
 
 	public TetrisBlock getRandomTetrisBlock(){
 		switch((int)(Math.random()*7)){
-		case TetrisBlock.TYPE_CENTERUP : return new CenterUp(4, 1);
-		case TetrisBlock.TYPE_LEFTTWOUP : return new LeftTwoUp(4, 1);
-		case TetrisBlock.TYPE_LEFTUP : return new LeftUp(4, 1);
-		case TetrisBlock.TYPE_RIGHTTWOUP : return new RightTwoUp(4, 1);
-		case TetrisBlock.TYPE_RIGHTUP : return new RightUp(4, 1);
-		case TetrisBlock.TYPE_LINE : return new Line(4, 1);
-		case TetrisBlock.TYPE_NEMO : return new Nemo(4, 1);
+			case TetrisBlock.TYPE_CENTERUP : return new CenterUp(4, 1);
+			case TetrisBlock.TYPE_LEFTTWOUP : return new LeftTwoUp(4, 1);
+			case TetrisBlock.TYPE_LEFTUP : return new LeftUp(4, 1);
+			case TetrisBlock.TYPE_RIGHTTWOUP : return new RightTwoUp(4, 1);
+			case TetrisBlock.TYPE_RIGHTUP : return new RightUp(4, 1);
+			case TetrisBlock.TYPE_LINE : return new Line(4, 1);
+			case TetrisBlock.TYPE_NEMO : return new Nemo(4, 1);
 		}
 		return null;
 	}
-	
-	
+
+
 	/**
 	 * tetrisBlock
 	 * @param tetrisBlock
@@ -540,13 +592,13 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 	public TetrisBlock getBlockClone(TetrisBlock tetrisBlock, boolean isGhost){
 		TetrisBlock blocks = null;
 		switch(tetrisBlock.getType()){
-		case TetrisBlock.TYPE_CENTERUP : blocks =  new CenterUp(4, 1); break;
-		case TetrisBlock.TYPE_LEFTTWOUP : blocks =  new LeftTwoUp(4, 1); break;
-		case TetrisBlock.TYPE_LEFTUP : blocks =  new LeftUp(4, 1); break;
-		case TetrisBlock.TYPE_RIGHTTWOUP : blocks =  new RightTwoUp(4, 1); break;
-		case TetrisBlock.TYPE_RIGHTUP : blocks =  new RightUp(4, 1); break;
-		case TetrisBlock.TYPE_LINE : blocks =  new Line(4, 1); break;
-		case TetrisBlock.TYPE_NEMO : blocks =  new Nemo(4, 1); break;
+			case TetrisBlock.TYPE_CENTERUP : blocks =  new CenterUp(4, 1); break;
+			case TetrisBlock.TYPE_LEFTTWOUP : blocks =  new LeftTwoUp(4, 1); break;
+			case TetrisBlock.TYPE_LEFTUP : blocks =  new LeftUp(4, 1); break;
+			case TetrisBlock.TYPE_RIGHTTWOUP : blocks =  new RightTwoUp(4, 1); break;
+			case TetrisBlock.TYPE_RIGHTUP : blocks =  new RightUp(4, 1); break;
+			case TetrisBlock.TYPE_LINE : blocks =  new Line(4, 1); break;
+			case TetrisBlock.TYPE_NEMO : blocks =  new Nemo(4, 1); break;
 		}
 		if(blocks!=null && isGhost){
 			blocks.setGhostView(isGhost);
@@ -555,9 +607,9 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 			blocks.rotation(tetrisBlock.getRotationIndex());
 		}
 		return blocks;
-	}	
-	
-	
+	}
+
+
 	/**TODO :
 	 *
 	 * @param removeCombo
@@ -580,7 +632,7 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 
 	public void playBlockHold(){
 		if(isHold) return;
-		
+
 		if(hold==null){
 			hold = getBlockClone(shap,false);
 			this.nextTetrisBlock();
@@ -590,11 +642,11 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 			hold = getBlockClone(tmp,false);
 			this.initController();
 		}
-		
+
 		isHold = true;
 	}
-	
-	
+
+
 	/**
 	 *
 	 * @param numOfLine
@@ -626,10 +678,10 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 				controller.moveDown(-1);
 			}
 		}
-		
-		
-		
-		
+
+
+
+
 		this.showGhost();
 		this.repaint();
 		synchronized (this) {
@@ -637,9 +689,9 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 			this.notify();
 		}
 	}
-	
-	
-	
+
+
+
 	public void keyReleased(KeyEvent e) {}
 	public void keyTyped(KeyEvent e) {}
 	public void keyPressed(KeyEvent e) {
@@ -661,7 +713,7 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 		}else if(e.getKeyCode() == KeyEvent.VK_SPACE){
 			controller.moveQuickDown(shap.getPosY(), true);
 			this.fixingTetrisBlock();
-		}else if(e.getKeyCode() == KeyEvent.VK_SHIFT){ 
+		}else if(e.getKeyCode() == KeyEvent.VK_SHIFT){
 			playBlockHold();
 		}
 		this.showGhost();
@@ -675,10 +727,10 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 		this.requestFocus();
 	}
 	public void mouseReleased(MouseEvent e) {}
-	
-	
-	
-	
+
+
+
+
 
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btnStart){
@@ -691,7 +743,7 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 			//this.gameReset();
 			this.tetris.getContentPane().remove(this);
 			this.tetris.go_menu();
-			
+
 		}
 	}
 
