@@ -25,6 +25,7 @@ import com.tetris.shape.Line;
 import com.tetris.shape.Nemo;
 import com.tetris.shape.RightTwoUp;
 import com.tetris.shape.RightUp;
+import java.sql.*;
 
 public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseListener, ActionListener{
 	private static final long serialVersionUID = 1L;
@@ -504,6 +505,62 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 	
 
 	public void gameEndCallBack(){
+		String end_id = this.nickName;
+		String end_score = this.score;
+		
+		Connection connection = null;
+			Statement st = null;
+			
+			try {
+				Class.forName("com.mysql.cj.jdbc.Driver");
+				connection = DriverManager.getConnection(/*URL*/);
+
+	            System.out.println("Connection Success");
+				String sql;
+	            sql = "UPDATE user_info set SCORE=? WHERE ID =?;";
+	            PreparedStatement pstmt = connection.prepareStatement(sql);
+	         
+	            pstmt.setString(1, end_score);
+				pstmt.setString(2, end_id);
+	            //ResultSet rs = st.executeQuery(sql);
+	            pstmt.executeUpdate();
+
+	            String pw_in_db ="";
+	            if(rs.next())
+	            {
+	            	pw_in_db = rs.getString(1);
+	            }
+	            
+	            if(pw_in_db.equals(pw))
+	            {
+	            	System.out.println("success");
+	            }
+	            else
+	            {
+	            	System.out.println("fail");
+	            }
+
+	            rs.close();
+	            //st.close();
+	            connection.close();
+			}
+			catch(SQLException se1)
+			{
+				se1.printStackTrace();
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+			}finally {
+				try {
+					if(connection != null)
+					{
+						connection.close();
+					}
+				}catch(Exception ex)
+				{}
+			}
+			
 		client.gameover();
 		this.isPlay = false;
 	}

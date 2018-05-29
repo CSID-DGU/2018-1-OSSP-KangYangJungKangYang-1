@@ -136,10 +136,17 @@ public class Login extends JPanel implements Runnable, KeyListener, MouseListene
 		// TODO Auto-generated method stub
 		if (e.getSource() == btnLogin) {
 			/* getConnection ?? ?? ? ?? ?? ?? URL ? ?? ???? ??
+<<<<<<< HEAD
+			 * ????? ??? ??? ??? ???? ??? txt ??? ??? txt ??? ??
+			 * ??? ?? ?? ? ??? ?? ???.
+			 * [??] ??? ??? 3 ?? ????? ??? ? ??? ??? ??? ???? ?? ??? ??
+			 * ??? ?? ? 3 ?? ???? ????? ?? ???.*/
+=======
 			  * ????? ??? ??? ??? ???? ??? txt ??? ??? txt ??? ??
 			  * ??? ?? ?? ? ??? ?? ???.
 			  * [??] ??? ??? 3 ?? ????? ??? ? ??? ??? ??? ???? ?? ??? ??
 			  * ??? ?? ? 3 ?? ???? ????? ?? ???.*/
+>>>>>>> 8cd038c3ccdf9324f23b59b2ecaf0765938aa752
 			String line = "";
 			String[] info = null;
 			try {
@@ -165,6 +172,36 @@ public class Login extends JPanel implements Runnable, KeyListener, MouseListene
 
 					//System.out.println("check flag 1");
 					String sql;
+<<<<<<< HEAD
+					sql = "select PW FROM user_info WHERE ID = ? LIMIT 1;";
+					PreparedStatement pstmt = connection.prepareStatement(sql);
+
+					pstmt.setString(1, id);
+					ResultSet rs = pstmt.executeQuery();
+					String pw_in_db ="";
+					//ResultSet rs = st.executeQuery(sql);
+					//String sqlRecipeProcess="";
+					while (rs.next()) {
+						pw_in_db = rs.getString(1);
+					}
+
+					if(pw_in_db.equals(pw)){
+						System.out.println("success");
+						tetris.user_Login();
+						tetris.go_menu();
+						InetAddress local = InetAddress.getLocalHost();
+						String ip = local.getHostAddress();
+						sql = "update user_info set IP=? WHERE ID =?;";
+						pstmt = connection.prepareStatement(sql);
+						pstmt.setString(1, ip);
+						pstmt.setString(2, id);
+						pstmt.executeUpdate();
+					}
+					else{
+						System.out.println("fail");
+						JOptionPane.showMessageDialog(null, "Check your ID or Password!");
+					}
+=======
 					sql = "select * FROM user_info;";
 
 					ResultSet rs = st.executeQuery(sql);
@@ -174,10 +211,26 @@ public class Login extends JPanel implements Runnable, KeyListener, MouseListene
 					}
 
 					System.out.println(sqlRecipeProcess);
+>>>>>>> 8cd038c3ccdf9324f23b59b2ecaf0765938aa752
 					rs.close();
 					st.close();
 					connection.close();
 				}
+<<<<<<< HEAD
+				catch(SQLException se1){
+					se1.printStackTrace();
+				}
+				catch(Exception ex){
+					ex.printStackTrace();
+				}finally {
+					try {
+						if(connection != null){
+							connection.close();
+						}
+					}catch(Exception ex){}
+				}
+
+=======
 				catch(SQLException se1)
 				{
 					se1.printStackTrace();
@@ -196,6 +249,7 @@ public class Login extends JPanel implements Runnable, KeyListener, MouseListene
 				}
 				tetris.user_Login();
 				tetris.go_menu();
+>>>>>>> 8cd038c3ccdf9324f23b59b2ecaf0765938aa752
 			} else {
 				JOptionPane.showMessageDialog(null, "Check your ID or Password!");
 			}
