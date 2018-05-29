@@ -34,7 +34,7 @@ public class MessageArea extends JPanel implements ActionListener {
 		this.add("Center", scroll);
 		this.add("South", txtField);
 	}
-	
+
 	public MessageArea(SinglePlay board, int x, int y, int width, int height) {
 		this.single = board;
 		this.setLayout(new BorderLayout(2, 2));
@@ -52,12 +52,12 @@ public class MessageArea extends JPanel implements ActionListener {
 	}
 
 	public void printMessage(String msg) {
-		for(int i =0; i<this.swear_word.length;i++) {
-			if(msg.contains(this.swear_word[i])) {
+		for (int i = 0; i < this.swear_word.length; i++) {
+			if (msg.contains(this.swear_word[i])) {
 				String str = "";
 				int l = this.swear_word[i].length();
-				for(int j = 0;j<l;j++)
-					str+="*";
+				for (int j = 0; j < l; j++)
+					str += "*";
 				msg = msg.replace(this.swear_word[i], str);
 			}
 		}
@@ -76,10 +76,12 @@ public class MessageArea extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (board.isPlay())
-			board.requestFocus();
-		if (board.getClient() != null)
-			board.getClient().printMessage(txtField.getText().trim());
-		txtField.setText("");
+		if (board != null) {
+			if (board.isPlay())
+				board.requestFocus();
+			if (board.getClient() != null)
+				board.getClient().printMessage(txtField.getText().trim());
+			txtField.setText("");
+		}
 	}
 }
