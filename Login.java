@@ -15,6 +15,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 
 import javax.swing.ImageIcon;
@@ -29,6 +30,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import java.sql.*;
+import java.util.Scanner;
 
 import com.tetris.main.TetrisMain;
 import com.tetris.network.GameClient;
@@ -134,45 +136,66 @@ public class Login extends JPanel implements Runnable, KeyListener, MouseListene
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getSource() == btnLogin) {
+			/* getConnection ?? ?? ? ?? ?? ?? URL ? ?? ???? ??
+			  * ????? ??? ??? ??? ???? ??? txt ??? ??? txt ??? ??
+			  * URL? ?? ?? ? ??? ?? ???.*/
+			Scanner sc = null;
+			String url = "";
+			try{
+				sc = new Scanner(new File("D:/url.txt"));
+				while(sc.hasNextLine()){
+					url = sc.nextLine();
+				}
+			}catch (IOException ie){
+				ie.printStackTrace();
+			}finally {
+				if(sc != null){
+					sc.close();
+				}
+			}
 			id = id_area.getText();
 			pw = pw_area.getText();
 			if (client == null && !id.equals("") && !pw.equals("")) {
-                Connection connection = null;
-                Statement st = null;
+				Connection connection = null;
+				Statement st = null;
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					connection = DriverManager.getConnection(url);
 
-                try { // Database Plug-in
-                    Class.forName("com.mysql.cj.jdbc.Driver");
-                    connection = DriverManager.getConnection("");
+					System.out.println("Connection Success");
+					st = connection.createStatement();
 
-                    System.out.println("Connection Success");
-                    st = connection.createStatement();
+					//System.out.println("check flag 1");
+					String sql;
+					sql = "select * FROM user_info;";
 
-                    //System.out.println("check flag 1");
-                    String sql;
-                    sql = "select * FROM user_info;";
+					ResultSet rs = st.executeQuery(sql);
+					String sqlRecipeProcess="";
+					while (rs.next()) {
+						sqlRecipeProcess = rs.getString("IP");
+					}
 
-                    ResultSet rs = st.executeQuery(sql);
-                    String sqlRecipeProcess = "";
-                    while (rs.next()) {
-                        sqlRecipeProcess = rs.getString("IP");
-                    }
-
-                    System.out.println(sqlRecipeProcess);
-                    rs.close();
-                    st.close();
-                    connection.close();
-                } catch (SQLException se1) {
-                    se1.printStackTrace();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                } finally {
-                    try {
-                        if (connection != null) {
-                            connection.close();
-                        }
-                    } catch (Exception ex) {
-                    }
-                }
+					System.out.println(sqlRecipeProcess);
+					rs.close();
+					st.close();
+					connection.close();
+				}
+				catch(SQLException se1)
+				{
+					se1.printStackTrace();
+				}
+				catch(Exception ex)
+				{
+					ex.printStackTrace();
+				}finally {
+					try {
+						if(connection != null)
+						{
+							connection.close();
+						}
+					}catch(Exception ex)
+					{}
+				}
 				tetris.user_Login();
 				tetris.go_menu();
 			} else {
