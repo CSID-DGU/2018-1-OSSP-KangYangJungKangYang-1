@@ -15,7 +15,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.Desktop;
-import java.io.IOException;
+import java.io.*;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -29,6 +29,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import java.sql.*;
+import java.util.Scanner;
 
 import com.tetris.main.TetrisMain;
 import com.tetris.network.GameClient;
@@ -134,47 +135,74 @@ public class Login extends JPanel implements Runnable, KeyListener, MouseListene
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getSource() == btnLogin) {
+			/* getConnection ?? ?? ? ?? ?? ?? URL ? ?? ???? ??
+			 * ????? ??? ??? ??? ???? ??? txt ??? ??? txt ??? ??
+			 * ??? ?? ?? ? ??? ?? ???.
+			 * [??] ??? ??? 3 ?? ????? ??? ? ??? ??? ??? ???? ?? ??? ??
+			 * ??? ?? ? 3 ?? ???? ????? ?? ???.*/
+			String line = "";
+			String[] info = null;
+			try {
+				BufferedReader reader = new BufferedReader(new FileReader("D:\\url.txt"));
+				while((line = reader.readLine())!=null) {
+					info = line.split(",");
+				}
+				reader.close();
+			}catch (Exception fe){
+				fe.printStackTrace();
+			}
 			id = id_area.getText();
 			pw = pw_area.getText();
 			if (client == null && !id.equals("") && !pw.equals("")) {
-                Connection connection = null;
-                Statement st = null;
+				Connection connection = null;
+				Statement st = null;
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					connection = DriverManager.getConnection(info[0],info[1],info[2]);
 
-                try { // Database Plug-in
-                    Class.forName("com.mysql.cj.jdbc.Driver");
-                    connection = DriverManager.getConnection("");
+					System.out.println("Connection Success");
+					st = connection.createStatement();
 
-                    System.out.println("Connection Success");
-                    st = connection.createStatement();
+					//System.out.println("check flag 1");
+					String sql;
+					sql = "select PW FROM user_info WHERE ID = ? LIMIT 1;";
+					PreparedStatement pstmt = connection.prepareStatement(sql);
 
-                    //System.out.println("check flag 1");
-                    String sql;
-                    sql = "select * FROM user_info;";
+					pstmt.setString(1, id);
+					ResultSet rs = pstmt.executeQuery();
+					String pw_in_db ="";
+					//ResultSet rs = st.executeQuery(sql);
+					//String sqlRecipeProcess="";
+					while (rs.next()) {
+						pw_in_db = rs.getString(1);
+					}
 
-                    ResultSet rs = st.executeQuery(sql);
-                    String sqlRecipeProcess = "";
-                    while (rs.next()) {
-                        sqlRecipeProcess = rs.getString("IP");
-                    }
+					if(pw_in_db.equals(pw)){
+						System.out.println("success");
+						tetris.user_Login();
+						tetris.go_menu();
+					}
+					else{
+						System.out.println("fail");
+						JOptionPane.showMessageDialog(null, "Check your ID or Password!");
+					}
+					rs.close();
+					st.close();
+					connection.close();
+				}
+				catch(SQLException se1){
+					se1.printStackTrace();
+				}
+				catch(Exception ex){
+					ex.printStackTrace();
+				}finally {
+					try {
+						if(connection != null){
+							connection.close();
+						}
+					}catch(Exception ex){}
+				}
 
-                    System.out.println(sqlRecipeProcess);
-                    rs.close();
-                    st.close();
-                    connection.close();
-                } catch (SQLException se1) {
-                    se1.printStackTrace();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                } finally {
-                    try {
-                        if (connection != null) {
-                            connection.close();
-                        }
-                    } catch (Exception ex) {
-                    }
-                }
-				tetris.user_Login();
-				tetris.go_menu();
 			} else {
 				JOptionPane.showMessageDialog(null, "Check your ID or Password!");
 			}
