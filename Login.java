@@ -15,8 +15,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.Desktop;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -138,20 +137,19 @@ public class Login extends JPanel implements Runnable, KeyListener, MouseListene
 		if (e.getSource() == btnLogin) {
 			/* getConnection ?? ?? ? ?? ?? ?? URL ? ?? ???? ??
 			  * ????? ??? ??? ??? ???? ??? txt ??? ??? txt ??? ??
-			  * URL? ?? ?? ? ??? ?? ???.*/
-			Scanner sc = null;
-			String url = "";
-			try{
-				sc = new Scanner(new File("D:/url.txt"));
-				while(sc.hasNextLine()){
-					url = sc.nextLine();
+			  * ??? ?? ?? ? ??? ?? ???.
+			  * [??] ??? ??? 3 ?? ????? ??? ? ??? ??? ??? ???? ?? ??? ??
+			  * ??? ?? ? 3 ?? ???? ????? ?? ???.*/
+			String line = "";
+			String[] info = null;
+			try {
+				BufferedReader reader = new BufferedReader(new FileReader("D:\\url.txt"));
+				while((line = reader.readLine())!=null) {
+					info = line.split(",");
 				}
-			}catch (IOException ie){
-				ie.printStackTrace();
-			}finally {
-				if(sc != null){
-					sc.close();
-				}
+				reader.close();
+			}catch (Exception fe){
+				fe.printStackTrace();
 			}
 			id = id_area.getText();
 			pw = pw_area.getText();
@@ -160,7 +158,7 @@ public class Login extends JPanel implements Runnable, KeyListener, MouseListene
 				Statement st = null;
 				try {
 					Class.forName("com.mysql.cj.jdbc.Driver");
-					connection = DriverManager.getConnection(url);
+					connection = DriverManager.getConnection(info[0],info[1],info[2]);
 
 					System.out.println("Connection Success");
 					st = connection.createStatement();
