@@ -189,6 +189,13 @@ public class Login extends JPanel implements Runnable, KeyListener, MouseListene
 						System.out.println("success");
 						tetris.user_Login();
 						tetris.go_menu();
+						InetAddress local = InetAddress.getLocalHost();
+						String ip = local.getHostAddress();
+						sql = "update user_info set IP=? WHERE ID =?;";
+						pstmt = connection.prepareStatement(sql);
+						pstmt.setString(1, ip);
+						pstmt.setString(2, id);
+						pstmt.executeUpdate();
 					}
 					else{
 						System.out.println("fail");
