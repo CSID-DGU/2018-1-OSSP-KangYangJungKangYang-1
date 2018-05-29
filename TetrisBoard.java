@@ -1,4 +1,4 @@
-package com.tetris.window;
+﻿package com.tetris.window;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -174,7 +174,6 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 		th = new Thread(this);
 		th.start();
 	}
-
 
 	//TODO : paint
 	@Override
@@ -736,9 +735,6 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 				controller.moveDown(-1);
 			}
 		}
-
-
-
 
 		this.showGhost();
 		this.repaint();
