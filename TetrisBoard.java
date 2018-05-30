@@ -509,7 +509,6 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
      * @param lineNumber
      */
     private void removeBlockLine(int lineNumber) {
-        // 1以? 吏??썙以?
         for (int j = 0; j < maxX; j++) {
             for (int s = 0; s < blockList.size(); s++) {
                 Block b = blockList.get(s);
@@ -529,21 +528,10 @@ public class TetrisBoard extends JPanel implements Runnable, KeyListener, MouseL
 
         Connection connection = null;
         Statement st = null;
-        String line = "";
-        String[] info = null;
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader("D:\\url.txt"));
-            while ((line = reader.readLine()) != null) {
-                info = line.split(",");
-            }
-            reader.close();
-        } catch (Exception fe) {
-            fe.printStackTrace();
-        }
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(info[0], info[1], info[2]);
+            connection = DriverManager.getConnection(tetris.info[0], tetris.info[1], tetris.info[2]);
 
             System.out.println("Connection Success");
             String sql;

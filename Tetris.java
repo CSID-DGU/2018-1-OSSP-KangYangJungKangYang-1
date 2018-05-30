@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.awt.Graphics;
@@ -47,6 +49,8 @@ public class Tetris extends JFrame implements ActionListener {
     private final JFrame frame;
     private final JPanel panel;
     private final JLabel text;
+
+    String[] info; // DB information
 
     public Tetris() {
         JMenuBar mnBar = new JMenuBar();
@@ -99,6 +103,17 @@ public class Tetris extends JFrame implements ActionListener {
             }
         });
 
+        String line = "";
+        this.info = null;
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("D:\\url.txt"));
+            while((line = reader.readLine())!=null) {
+                this.info = line.split(",");
+            }
+            reader.close();
+        }catch (Exception fe){
+            fe.printStackTrace();
+        }
 
     }
 
@@ -165,7 +180,7 @@ public class Tetris extends JFrame implements ActionListener {
 
             String contentText =
                     "<html><body><p>"
-                            + "Left : °Á<br>Right : °Ê<br>Down : °È<br>Rotate : °Ë<br>Quick Down : Space<br>Hold : Shift"
+                            + "Left : ‚Üê<br>Right : ‚Üí<br>Down : ‚Üì<br>Rotate : ‚Üë<br>Quick Down : Space<br>Hold : Shift"
                             + "</p></body></html>";
 
             text.setText(contentText);
