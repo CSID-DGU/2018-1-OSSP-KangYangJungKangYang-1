@@ -23,9 +23,11 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
+import com.sun.media.jfxmedia.Media;
 import com.tetris.network.GameClient;
 import com.tetris.network.GameServer;
 
+import javafx.scene.media.MediaPlayer;
 import sun.audio.AudioData;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
@@ -55,7 +57,7 @@ public class Tetris extends JFrame implements ActionListener {
 		/* BGM 재생 테스트 */
 			  try{
 
-				   File file = new File("C:\\Users\\serot\\Desktop\\sounds\\test.wav");
+				   File file = new File("C:\\Users\\serot\\Desktop\\sounds\\BGM_break_into.wav");
 				   FileInputStream fis = new FileInputStream(file);
 				   AudioStream as = new AudioStream(fis);
 				   AudioPlayer.player.start(as);
@@ -65,6 +67,10 @@ public class Tetris extends JFrame implements ActionListener {
 				   System.out.println("sound exception");
 				  }
 		
+
+		       
+
+		        
 		frame = new JFrame();
 		panel = new JPanel(new FlowLayout());
 		text = new JLabel();
