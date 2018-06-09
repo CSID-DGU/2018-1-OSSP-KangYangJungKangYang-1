@@ -17,7 +17,7 @@ public class MessageArea extends JPanel implements ActionListener {
 	private SinglePlay single;
 	private JTextArea area = new JTextArea();
 	private JTextField txtField = new JTextField();
-	private String[] swear_word = { "사랑합니다" };
+	private String[] swear_word = { "fuck" };
 
 	public MessageArea(TetrisBoard board, int x, int y, int width, int height) {
 		this.board = board;

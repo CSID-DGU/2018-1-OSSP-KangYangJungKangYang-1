@@ -1,8 +1,6 @@
 package com.tetris.window;
 
 import java.awt.Color;
-import java.net.InetAddress;
-
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -17,9 +15,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.Desktop;
-import java.io.*;
-import java.net.URI;
-import java.net.URISyntaxException;
+import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -29,21 +25,19 @@ import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import java.sql.*;
-import java.util.Scanner;
 
 import com.tetris.main.TetrisMain;
 import com.tetris.network.GameClient;
 
-
 public class Login extends JPanel implements Runnable, KeyListener, MouseListener, ActionListener {
-
 	private Tetris tetris;
 	private GameClient client;
 
-	private ImageIcon background = new ImageIcon(TetrisMain.class.getResource("../images/Background.png"));
+	private ImageIcon background = new ImageIcon(TetrisMain.class.getResource("../images/Background.jpg"));
 
 	public static final int BLOCK_SIZE = 20;
 	public static final int BOARD_X = 120;
@@ -55,29 +49,14 @@ public class Login extends JPanel implements Runnable, KeyListener, MouseListene
 	private final int PANEL_WIDTH = maxX * BLOCK_SIZE + MESSAGE_WIDTH + BOARD_X;
 	private final int PANEL_HEIGHT = maxY * BLOCK_SIZE + MESSAGE_HEIGHT + BOARD_Y;
 
-	ImageIcon icon1 = new ImageIcon(TetrisMain.class.getResource("../images/login_btn.png"));
-	Image image1 = icon1.getImage();
-	Image newimg1 = image1.getScaledInstance(150, 80, java.awt.Image.SCALE_SMOOTH);
-	private final ImageIcon login = new ImageIcon(newimg1);
-
-	ImageIcon icon2 = new ImageIcon(TetrisMain.class.getResource("../images/join_btn.png"));
-	Image image2 = icon2.getImage();
-	Image newimg2 = image2.getScaledInstance(150, 50, java.awt.Image.SCALE_SMOOTH);
-	private final ImageIcon join = new ImageIcon(newimg2);
-
-	ImageIcon icon3 = new ImageIcon(TetrisMain.class.getResource("../images/exit_btn.png"));
-	Image image3 = icon3.getImage();
-	Image newimg3 = image3.getScaledInstance(150, 50, java.awt.Image.SCALE_SMOOTH);
-	private final ImageIcon exit = new ImageIcon(newimg3);
-
 	private JTextField id_area = new JTextField(10);
 	private JPasswordField pw_area = new JPasswordField(10);
 	private JLabel login_label = new JLabel("Login");
 	private JLabel id_label = new JLabel("ID");
 	private JLabel pw_label = new JLabel("PW");
-	private JButton btnLogin = new JButton(login);
-	private JButton btnJoin = new JButton(join);
-	private JButton btnExit = new JButton(exit);
+	private JButton btnLogin = new JButton("LOGIN");
+	private JButton btnJoin = new JButton("JOIN");
+	private JButton btnExit = new JButton("EXIT");
 
 	private String id;
 	private String pw;
@@ -85,7 +64,7 @@ public class Login extends JPanel implements Runnable, KeyListener, MouseListene
 	public Login(Tetris tetris, GameClient client) {
 		this.tetris = tetris;
 		this.client = client;
-		this.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
+		this.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));// 湲곕낯�겕湲�
 		this.addKeyListener(this);
 		this.addMouseListener(this);
 		this.setLayout(null);
@@ -109,7 +88,7 @@ public class Login extends JPanel implements Runnable, KeyListener, MouseListene
 		login_label.setForeground(Color.WHITE);
 		id_label.setForeground(Color.WHITE);
 		pw_label.setForeground(Color.WHITE);
-		login_label.setFont(new Font("Serif", Font.BOLD, 40));
+		login_label.setFont(new Font("Serif", Font.BOLD, 30));
 
 		this.add(id_area);
 		this.add(pw_area);
@@ -123,10 +102,7 @@ public class Login extends JPanel implements Runnable, KeyListener, MouseListene
 	}
 
 	public void paintComponent(Graphics g) {
-		Image img = background.getImage();
-		Image img2 = img.getScaledInstance(PANEL_WIDTH, PANEL_HEIGHT, Image.SCALE_SMOOTH);
-		ImageIcon background2 = new ImageIcon(img2);
-		g.drawImage(background2.getImage(), 0, 0, null);
+		g.drawImage(background.getImage(), 0, 0, null);
 		setOpaque(false);
 		super.paintComponent(g);
 	}
@@ -140,71 +116,11 @@ public class Login extends JPanel implements Runnable, KeyListener, MouseListene
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getSource() == btnLogin) {
-
-
 			id = id_area.getText();
 			pw = pw_area.getText();
 			if (client == null && !id.equals("") && !pw.equals("")) {
-				Connection connection = null;
-				Statement st = null;
-				try {
-					Class.forName("com.mysql.cj.jdbc.Driver");
-					connection = DriverManager.getConnection(tetris.info[0],tetris.info[1],tetris.info[2]);
-
-					System.out.println("Connection Success");
-					st = connection.createStatement();
-
-					//System.out.println("check flag 1");
-					String sql;
-
-					sql = "select PW FROM user_info WHERE ID = ? LIMIT 1;";
-					PreparedStatement pstmt = connection.prepareStatement(sql);
-
-					pstmt.setString(1, id);
-					ResultSet rs = pstmt.executeQuery();
-
-					String pw_in_db ="";
-					while (rs.next()) {
-						pw_in_db = rs.getString(1);
-					}
-
-					if(pw_in_db.equals(pw)){
-
-
-						System.out.println("matching success");
-						InetAddress local = InetAddress.getLocalHost();
-						String ip = local.getHostAddress();
-						System.out.println(ip);
-						sql = "update user_info set IP=? WHERE ID =?;";
-						pstmt = connection.prepareStatement(sql);
-						pstmt.setString(1, ip);
-						pstmt.setString(2, id);
-						pstmt.executeUpdate();
-
-						tetris.user_Login();
-						tetris.go_menu();
-					}
-					else{
-						System.out.println("fail");
-						JOptionPane.showMessageDialog(null, "Check your ID or Password!");
-					}
-
-					rs.close();
-					st.close();
-					connection.close();
-				}
-				catch(SQLException se1){
-					se1.printStackTrace();
-				}
-				catch(Exception ex){
-					ex.printStackTrace();
-				}finally {
-					try {
-						if(connection != null){
-							connection.close();
-						}
-					}catch(Exception ex){}
-				}
+				tetris.user_Login();
+				tetris.go_menu();
 			} else {
 				JOptionPane.showMessageDialog(null, "Check your ID or Password!");
 			}
@@ -228,19 +144,24 @@ public class Login extends JPanel implements Runnable, KeyListener, MouseListene
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent arg0) {   }
+	public void mouseClicked(MouseEvent arg0) {
+	}
 
 	@Override
-	public void mouseEntered(MouseEvent arg0) {   }
+	public void mouseEntered(MouseEvent arg0) {
+	}
 
 	@Override
-	public void mouseExited(MouseEvent arg0) {   }
+	public void mouseExited(MouseEvent arg0) {
+	}
 
 	@Override
-	public void mousePressed(MouseEvent arg0) {   }
+	public void mousePressed(MouseEvent arg0) {
+	}
 
 	@Override
-	public void mouseReleased(MouseEvent arg0) {   }
+	public void mouseReleased(MouseEvent arg0) {
+	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -255,11 +176,14 @@ public class Login extends JPanel implements Runnable, KeyListener, MouseListene
 	}
 
 	@Override
-	public void keyReleased(KeyEvent arg0) {   }
+	public void keyReleased(KeyEvent arg0) {
+	}
 
 	@Override
-	public void keyTyped(KeyEvent arg0) {   }
+	public void keyTyped(KeyEvent arg0) {
+	}
 
 	@Override
-	public void run() {   }
+	public void run() {
+	}
 }
