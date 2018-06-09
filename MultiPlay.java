@@ -798,7 +798,47 @@ public class MultiPlay extends JPanel implements Runnable, KeyListener, MouseLis
             this.gameEndCallBack();
             this.gameReset();
 
+            //쿼리문 자기 것 open_room = 0 으로 바꾸는 것
+            {
+                Connection connection = null;
+                Statement st = null;
+                try {
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    connection = DriverManager.getConnection(tetris.info[0],tetris.info[1],tetris.info[2]);
 
+                    System.out.println("BAConnection Success");
+                    st = connection.createStatement();
+
+                    String sql;
+
+                    //출력 : 현재 방을 개설한 사람이 없습니다.
+
+                    //방을 열은 사람이 없는 것
+                    //자신의 openroom을 1로 변경하고 대기
+                    sql = "update user_info set open_room = 0 WHERE ID = ?;";
+
+
+                    System.out.println("check other_ip_1");
+                    PreparedStatement pst = connection.prepareStatement(sql);
+                    pst.setString(1, tetris.login.getId());
+                    pst.executeUpdate();
+
+                    st.close();
+                    connection.close();
+                }
+                catch(SQLException se1){
+                    se1.printStackTrace();
+                }
+                catch(Exception ex){
+                    ex.printStackTrace();
+                }finally {
+                    try {
+                        if(connection != null){
+                            connection.close();
+                        }
+                    }catch(Exception ex){}
+                }
+            }
 
             this.tetris.getContentPane().remove(this);
             this.tetris.go_menu();
