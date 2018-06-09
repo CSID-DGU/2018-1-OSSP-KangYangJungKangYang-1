@@ -37,7 +37,6 @@ import java.util.Scanner;
 import com.tetris.main.TetrisMain;
 import com.tetris.network.GameClient;
 
-
 public class Login extends JPanel implements Runnable, KeyListener, MouseListener, ActionListener {
 
 	private Tetris tetris;
@@ -79,6 +78,7 @@ public class Login extends JPanel implements Runnable, KeyListener, MouseListene
 	private JButton btnJoin = new JButton(join);
 	private JButton btnExit = new JButton(exit);
 
+	private String ip;
 	private String id;
 	private String pw;
 
@@ -131,6 +131,10 @@ public class Login extends JPanel implements Runnable, KeyListener, MouseListene
 		super.paintComponent(g);
 	}
 
+	public String getIp() {
+		return ip;
+	}
+
 	public String getId() {
 		return id;
 	}
@@ -140,8 +144,6 @@ public class Login extends JPanel implements Runnable, KeyListener, MouseListene
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getSource() == btnLogin) {
-
-
 			id = id_area.getText();
 			pw = pw_area.getText();
 			if (client == null && !id.equals("") && !pw.equals("")) {
@@ -154,9 +156,7 @@ public class Login extends JPanel implements Runnable, KeyListener, MouseListene
 					System.out.println("Connection Success");
 					st = connection.createStatement();
 
-					//System.out.println("check flag 1");
 					String sql;
-
 					sql = "select PW FROM user_info WHERE ID = ? LIMIT 1;";
 					PreparedStatement pstmt = connection.prepareStatement(sql);
 
@@ -170,10 +170,9 @@ public class Login extends JPanel implements Runnable, KeyListener, MouseListene
 
 					if(pw_in_db.equals(pw)){
 
-
 						System.out.println("matching success");
 						InetAddress local = InetAddress.getLocalHost();
-						String ip = local.getHostAddress();
+						ip = local.getHostAddress();
 						System.out.println(ip);
 						sql = "update user_info set IP=? WHERE ID =?;";
 						pstmt = connection.prepareStatement(sql);

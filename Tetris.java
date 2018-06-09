@@ -12,6 +12,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.sql.*;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -29,7 +30,7 @@ public class Tetris extends JFrame implements ActionListener {
     private static final long serialVersionUID = 1L;
     private GameServer server;
     private GameClient client;
-    private Login login = new Login(this, client);
+    public Login login = new Login(this, client);
     private Menu menu = new Menu(this, client);
     private MultiPlay multi = new MultiPlay(this, client);
     private SinglePlay single = new SinglePlay(this, client);
@@ -88,6 +89,48 @@ public class Tetris extends JFrame implements ActionListener {
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
+
+                {
+                    Connection connection = null;
+                    Statement st = null;
+                    try {
+                        Class.forName("com.mysql.cj.jdbc.Driver");
+                        connection = DriverManager.getConnection(info[0],info[1],info[2]);
+
+                        System.out.println("BAConnection Success");
+                        st = connection.createStatement();
+
+                        String sql;
+
+                        //출력 : 현재 방을 개설한 사람이 없습니다.
+
+                        //방을 열은 사람이 없는 것
+                        //자신의 openroom을 1로 변경하고 대기
+                        sql = "update user_info set open_room = 0 WHERE ID = ?;";
+
+
+                        System.out.println("check other_ip_1");
+                        PreparedStatement pst = connection.prepareStatement(sql);
+                        pst.setString(1, login.getId());
+                        pst.executeUpdate();
+
+                        st.close();
+                        connection.close();
+                    }
+                    catch(SQLException se1){
+                        se1.printStackTrace();
+                    }
+                    catch(Exception ex){
+                        ex.printStackTrace();
+                    }finally {
+                        try {
+                            if(connection != null){
+                                connection.close();
+                            }
+                        }catch(Exception ex){}
+                    }
+                }
+
                 if (client != null) {
                     if (isNetwork) {
                         client.closeNetwork(isServer);
@@ -101,7 +144,7 @@ public class Tetris extends JFrame implements ActionListener {
         String line = "";
         this.info = null;
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("D:\\url.txt"));
+            BufferedReader reader = new BufferedReader(new FileReader("C:\\url.txt"));
             while((line = reader.readLine())!=null) {
                 this.info = line.split(",");
             }
@@ -257,14 +300,113 @@ public class Tetris extends JFrame implements ActionListener {
         this.getContentPane().add(multi);
         this.revalidate();
         this.repaint();
-        client = new GameClient(this, "10.80.17.186", 9500, "test1234");
-        if (client.start()) {
-            itemServerStart.setEnabled(false);
-            itemClientStart.setEnabled(false);
-            multi.setClient(client);
-            multi.startNetworking("10.80.17.186", 9500, "test1234");
-            isNetwork = true;
+
+        //mysql 연결 멀티로 들어가면 openroom 1로 변경
+        String curret_login_id = login.getId();
+
+
+        {
+            Connection connection = null;
+            Statement st = null;
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                connection = DriverManager.getConnection(info[0],info[1],info[2]);
+
+                System.out.println("Connection Success");
+                st = connection.createStatement();
+
+                String sql;
+
+                sql = "select IP FROM user_info WHERE open_room = 1 LIMIT 1;";
+                PreparedStatement pstmt = connection.prepareStatement(sql);
+
+                //pstmt.setString(1, login.getId());
+                ResultSet rs = pstmt.executeQuery();
+
+                String Other_IP ="";
+
+                while (rs.next()) {
+                    Other_IP = rs.getString(1);
+                }
+
+                System.out.println(Other_IP);
+
+                if(Other_IP == "")
+                {
+                    //출력 : 현재 방을 개설한 사람이 없습니다.
+
+                    //방을 열은 사람이 없는 것
+                    //자신의 openroom을 1로 변경하고 대기
+                    sql = "update user_info set open_room = 1 WHERE ID = ?;";
+
+
+                    System.out.println("check other_ip_1");
+                    PreparedStatement pst = connection.prepareStatement(sql);
+                    pst.setString(1, login.getId());
+                    pst.executeUpdate();
+
+                    System.out.println("check other_ip_2");
+                }
+                else
+                {
+                    //출력 : 상대방이 검색 되었습니다.
+                    System.out.println("check other_ip else");
+                    //Other_IP에 상대방의 ip 정보가 들어가 있음
+                    //위에 것이 상대방 ip 정보
+                    client = new GameClient(this, Other_IP , 9500, "OTHER");
+                    if (client.start()) {
+                       itemServerStart.setEnabled(false);
+                        itemClientStart.setEnabled(false);
+                        multi.setClient(client);
+                        multi.startNetworking(login.getIp(), 9500, "MY");
+                        isNetwork = true;
+                    }
+
+                }
+                rs.close();
+                st.close();
+                connection.close();
+            }
+            catch(SQLException se1){
+                se1.printStackTrace();
+            }
+            catch(Exception ex){
+                ex.printStackTrace();
+            }finally {
+                try {
+                    if(connection != null){
+                        connection.close();
+                    }
+                }catch(Exception ex){}
+            }
         }
+        //서버 접속
+
+
+        //멀티 접속 >> mysql openroom이 1인 것을 찾고 있으면 둘이 연결하고 2로 바꿔주고
+        //없으면 서버로 접속해서 openroom을 1로 바꿔주고 대기한다.
+
+
+
+
+        // open room 이 1 인 애들 중에서 한명 선택해서 ip를 넣어주고
+
+        //ip와 nickname을 넣고
+        //아래는 자기의 ip와 닉네임
+
+        //mysql에 openroom 2로 바꿔서 하다가
+
+
+
+        //플레이 실행 중
+
+
+        //플레이 둘 중 한명 끝났을 때
+        //......
+
+        //
+        //내가 죽으면 서버에 1로 던지고
+
     }
 
     public void go_single() {
