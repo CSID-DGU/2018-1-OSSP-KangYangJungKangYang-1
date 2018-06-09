@@ -3,18 +3,17 @@ package com.tetris.window;
 import java.awt.Dimension;
 
 import java.awt.FlowLayout;
-import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.awt.Graphics;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -23,277 +22,299 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import com.tetris.main.TetrisMain;
 import com.tetris.network.GameClient;
 import com.tetris.network.GameServer;
 
 public class Tetris extends JFrame implements ActionListener {
-	private static final long serialVersionUID = 1L;
-	private GameServer server;
-	private GameClient client;
-	private Login login = new Login(this, client);
-	private Menu menu = new Menu(this, client);
-	private TetrisBoard board = new TetrisBoard(this, client);
-	private SinglePlay single = new SinglePlay(this, client);
-	private JMenuItem itemServerStart = new JMenuItem("Connect with Server");
-	private JMenuItem itemClientStart = new JMenuItem("Access as a Client");
-	private JMenuItem itemGameManual = new JMenuItem("Game Manual");
-	private JMenuItem itemAboutGame = new JMenuItem("About Game");
+    private static final long serialVersionUID = 1L;
+    private GameServer server;
+    private GameClient client;
+    private Login login = new Login(this, client);
+    private Menu menu = new Menu(this, client);
+    private MultiPlay multi = new MultiPlay(this, client);
+    private SinglePlay single = new SinglePlay(this, client);
+    private JMenuItem itemServerStart = new JMenuItem("Connect with Server");
+    private JMenuItem itemClientStart = new JMenuItem("Access as a Client");
+    private JMenuItem itemGameManual = new JMenuItem("Game Manual");
+    private JMenuItem itemAboutGame = new JMenuItem("About Game");
 
-	private boolean isNetwork;
-	private boolean isServer;
+    private boolean isNetwork;
+    private boolean isServer;
 
-	private final JFrame frame;
-	private final JPanel panel;
-	private final JLabel text;
-	
-	public Tetris() {
-		JMenuBar mnBar = new JMenuBar();
-		//JMenu mnGame = new JMenu("Connection");
-		JMenu mnAbout = new JMenu("About");
+    private final JFrame frame;
+    private final JPanel panel;
+    private final JLabel text;
 
-		frame = new JFrame();
-		panel = new JPanel(new FlowLayout());
-		text = new JLabel();
+    String[] info; // DB information
 
-		panel.setBorder(BorderFactory.createEmptyBorder(8, 4, 8, 4)); // �솕硫댁쓽 怨듬갚 �긽/醫�/�븯/�슦
-		//frame.setLocationRelativeTo(board); // �솕硫댁씠 �굹���궇 �쐞移� �꽕�젙
+    public Tetris() {
+        JMenuBar mnBar = new JMenuBar();
+        //JMenu mnGame = new JMenu("Connection");
+        JMenu mnAbout = new JMenu("About");
 
-		
-		//mnGame.add(itemServerStart);
-		//mnGame.add(itemClientStart);
-		//mnBar.add(mnGame);
+        frame = new JFrame();
+        panel = new JPanel(new FlowLayout());
+        text = new JLabel();
 
-		mnAbout.add(itemGameManual);
-		mnAbout.add(itemAboutGame);
-		mnBar.add(mnAbout);
+        panel.setBorder(BorderFactory.createEmptyBorder(8, 4, 8, 4)); //
+        //frame.setLocationRelativeTo(board); //
 
-		this.setJMenuBar(mnBar);
 
-		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		this.getContentPane().add(login);
-		
-		
-		
-		this.setResizable(false);
-		this.pack();
-		Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
-		this.setLocation((size.width - this.getWidth()) / 2, (size.height - this.getHeight()) / 2);
-		frame.setLocation((size.width - this.getWidth()) / 2, (size.height - this.getHeight()));
-		this.setVisible(true);
+        //mnGame.add(itemServerStart);
+        //mnGame.add(itemClientStart);
+        //mnBar.add(mnGame);
 
-		itemServerStart.addActionListener(this);
-		itemClientStart.addActionListener(this);
-		itemGameManual.addActionListener(this);
-		itemAboutGame.addActionListener(this);
-		this.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				if (client != null) {
-					if (isNetwork) {
-						client.closeNetwork(isServer);
-					}
-				} else {
-					System.exit(0);
-				}
-			}
-		});
-	}
+        mnAbout.add(itemGameManual);
+        mnAbout.add(itemAboutGame);
+        mnBar.add(mnAbout);
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
+        this.setJMenuBar(mnBar);
 
-		String ip = null;
-		int port = 0;
-		String nickName = null;
-		if (e.getSource() == itemServerStart) {
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        this.getContentPane().add(login);
 
-			String sp = JOptionPane.showInputDialog("Enter Port Number", "9500");
-			if (sp != null && !sp.equals(""))
-				port = Integer.parseInt(sp);
-			nickName = JOptionPane.showInputDialog("Enter Your ID", "User1");
 
-			if (port != 0) {
-				if (server == null)
-					server = new GameServer(port);
-				server.startServer();
-				try {
-					ip = InetAddress.getLocalHost().getHostAddress();
-				} catch (UnknownHostException e1) {
-					e1.printStackTrace();
-				}
-				if (ip != null) {
-					client = new GameClient(this, ip, port, nickName);
-					if (client.start()) {
-						itemServerStart.setEnabled(false);
-						itemClientStart.setEnabled(false);
-						board.setClient(client);
-						board.getBtnStart().setEnabled(true);
-						board.startNetworking(ip, port, nickName);
-						isNetwork = true;
-						isServer = true;
-					}
-				}
-			}
-		} else if (e.getSource() == itemClientStart) {
-			try {
-				ip = InetAddress.getLocalHost().getHostAddress();
-			} catch (UnknownHostException e1) {
-				e1.printStackTrace();
-			}
+        this.setResizable(false);
+        this.pack();
+        Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation((size.width - this.getWidth()) / 2, (size.height - this.getHeight()) / 2);
+        frame.setLocation((size.width - this.getWidth()) / 2, (size.height - this.getHeight()));
+        this.setVisible(true);
 
-			ip = JOptionPane.showInputDialog("Enter Your IP", ip);
-			String sp = JOptionPane.showInputDialog("Enter Port Number", "9500");
-			if (sp != null && !sp.equals(""))
-				port = Integer.parseInt(sp);
-			nickName = JOptionPane.showInputDialog("Enter Your ID", "User2");
+        itemServerStart.addActionListener(this);
+        itemClientStart.addActionListener(this);
+        itemGameManual.addActionListener(this);
+        itemAboutGame.addActionListener(this);
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                if (client != null) {
+                    if (isNetwork) {
+                        client.closeNetwork(isServer);
+                    }
+                } else {
+                    System.exit(0);
+                }
+            }
+        });
 
-			if (ip != null) {
-				client = new GameClient(this, ip, port, nickName);
-				if (client.start()) {
-					itemServerStart.setEnabled(false);
-					itemClientStart.setEnabled(false);
-					board.setClient(client);
-					board.startNetworking(ip, port, nickName);
-					isNetwork = true;
-				}
-			}
-		} else if (e.getSource() == itemGameManual) {
-			frame.setTitle("Tetris Game Manual");
+        String line = "";
+        this.info = null;
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("D:\\url.txt"));
+            while((line = reader.readLine())!=null) {
+                this.info = line.split(",");
+            }
+            reader.close();
+        }catch (Exception fe){
+            fe.printStackTrace();
+        }
 
-			String contentText =
-					"<html><body><p>"
-							+ "Left : �넀<br>Right : �넂<br>Down : �넃<br>Rotate : �넁<br>Quick Down : Space<br>Hold : Shift"
-							+ "</p></body></html>";
+    }
 
-			text.setText(contentText);
-			panel.add(text);
-			frame.add(panel);
+    @Override
+    public void actionPerformed(ActionEvent e) {
 
-			frame.setSize(300, 200);
-			frame.setVisible(true);
-		} else if (e.getSource() == itemAboutGame) {
-			frame.setTitle("About Tetris Game");
+        String ip = null;
+        int port = 0;
+        String nickName = null;
+        if (e.getSource() == itemServerStart) {
 
-			String contentText = "<html><body><p>" + "Modified By<br>"
-					+ "Dongguk Univ Computer Engineering..<br>"
-					+ "[OSSP] Kang Yang Jung Kang Yang"
-					+ "</p></body></html>";
+            String sp = JOptionPane.showInputDialog("Enter Port Number", "9500");
+            if (sp != null && !sp.equals(""))
+                port = Integer.parseInt(sp);
+            nickName = JOptionPane.showInputDialog("Enter Your ID", "User1");
 
-			text.setText(contentText);
-			panel.add(text);
-			frame.add(panel);
+            if (port != 0) {
+                if (server == null)
+                    server = new GameServer(port);
+                server.startServer();
+                try {
+                    ip = InetAddress.getLocalHost().getHostAddress();
+                } catch (UnknownHostException e1) {
+                    e1.printStackTrace();
+                }
+                if (ip != null) {
+                    client = new GameClient(this, ip, port, nickName);
+                    if (client.start()) {
+                        itemServerStart.setEnabled(false);
+                        itemClientStart.setEnabled(false);
+                        multi.setClient(client);
+                        multi.getBtnStart().setEnabled(true);
+                        multi.startNetworking(ip, port, nickName);
+                        isNetwork = true;
+                        isServer = true;
+                    }
+                }
+            }
+        } else if (e.getSource() == itemClientStart) {
+            try {
+                ip = InetAddress.getLocalHost().getHostAddress();
+            } catch (UnknownHostException e1) {
+                e1.printStackTrace();
+            }
 
-			frame.setSize(300, 150);
-			frame.setVisible(true);
-		}
-	}
+            ip = JOptionPane.showInputDialog("Enter Your IP", ip);
+            String sp = JOptionPane.showInputDialog("Enter Port Number", "9500");
+            if (sp != null && !sp.equals(""))
+                port = Integer.parseInt(sp);
+            nickName = JOptionPane.showInputDialog("Enter Your ID", "User2");
 
-	public void closeNetwork() {
-		isNetwork = false;
-		client = null;
-		itemServerStart.setEnabled(true);
-		itemClientStart.setEnabled(true);
-		board.setPlay(false);
-		board.setClient(null);
-	}
-	
-	public void user_Login() {
-		String ip = null;
-		int port = 0;
-		String id = login.getId();
-		try {
-			ip = InetAddress.getLocalHost().getHostAddress();
-			port = 9500;
-		} catch (UnknownHostException e1) {
-			e1.printStackTrace();
-		}
-		
-		if (port != 0) {
-			if (server == null)
-				server = new GameServer(port);
-			server.startServer();
-			try {
-				ip = InetAddress.getLocalHost().getHostAddress();
-			} catch (UnknownHostException e1) {
-				e1.printStackTrace();
-			}
-			if (ip != null) {
-				client = new GameClient(this, ip, port, id);
-				if (client.start()) {
-					itemServerStart.setEnabled(false);
-					itemClientStart.setEnabled(false);
-					board.setClient(client);
-					board.getBtnStart().setEnabled(true);
-					board.startNetworking(ip, port, id);
-					isNetwork = true;
-					isServer = true;
-				}
-			}
-		}
-	}
-	public void go_menu() {
-		this.getContentPane().remove(login);
-		this.getContentPane().add(menu);
-		this.revalidate();
-		this.repaint();
-	}
-	
-	public void go_multi() {
-		this.getContentPane().remove(menu);
-		this.getContentPane().add(board);
-		this.revalidate();
-		this.repaint();
-	}
-	
-	public void go_single() {
-		this.getContentPane().remove(menu);
-		this.getContentPane().add(single);
-		this.revalidate();
-		this.repaint();
-	}
-	
-	public JMenuItem getItemServerStart() {
-		return itemServerStart;
-	}
+            if (ip != null) {
+                client = new GameClient(this, ip, port, nickName);
+                if (client.start()) {
+                    itemServerStart.setEnabled(false);
+                    itemClientStart.setEnabled(false);
+                    multi.setClient(client);
+                    multi.startNetworking(ip, port, nickName);
+                    isNetwork = true;
+                }
+            }
+        } else if (e.getSource() == itemGameManual) {
+            frame.setTitle("Tetris Game Manual");
 
-	public JMenuItem getItemClientStart() {
-		return itemClientStart;
-	}
+            String contentText =
+                    "<html><body><p>"
+                            + "Left : ←<br>Right : →<br>Down : ↓<br>Rotate : ↑<br>Quick Down : Space<br>Hold : Shift"
+                            + "</p></body></html>";
 
-	public TetrisBoard getBoard() {
-		return board;
-	}
+            text.setText(contentText);
+            panel.add(text);
+            frame.add(panel);
 
-	public void gameStart(int speed) {
-		board.gameStart(speed);
-	}
+            frame.setSize(300, 200);
+            frame.setVisible(true);
+        } else if (e.getSource() == itemAboutGame) {
+            frame.setTitle("About Tetris Game");
 
-	public boolean isNetwork() {
-		return isNetwork;
-	}
+            String contentText = "<html><body><p>" + "Modified By<br>"
+                    + "Dongguk Univ Computer Engineering..<br>"
+                    + "[OSSP] Kang Yang Jung Kang Yang"
+                    + "</p></body></html>";
 
-	public void setNetwork(boolean isNetwork) {
-		this.isNetwork = isNetwork;
-	}
+            text.setText(contentText);
+            panel.add(text);
+            frame.add(panel);
 
-	public void printSystemMessage(String msg) {
-		board.printSystemMessage(msg);
-	}
+            frame.setSize(300, 150);
+            frame.setVisible(true);
+        }
+    }
 
-	public void printMessage(String msg) {
-		board.printMessage(msg);
-	}
+    public void closeNetwork() {
+        isNetwork = false;
+        client = null;
+        itemServerStart.setEnabled(true);
+        itemClientStart.setEnabled(true);
+        multi.setPlay(false);
+        multi.setClient(null);
+    }
 
-	public boolean isServer() {
-		return isServer;
-	}
+    public void user_Login() {
+        String ip = null;
+        int port = 0;
+        String id = login.getId();
+        try {
+            ip = InetAddress.getLocalHost().getHostAddress();
+            port = 9500;
+        } catch (UnknownHostException e1) {
+            e1.printStackTrace();
+        }
 
-	public void setServer(boolean isServer) {
-		this.isServer = isServer;
-	}
+        if (port != 0) {
+            if (server == null)
+                server = new GameServer(port);
+            server.startServer();
+            try {
+                ip = InetAddress.getLocalHost().getHostAddress();
+            } catch (UnknownHostException e1) {
+                e1.printStackTrace();
+            }
+            if (ip != null) {
+                client = new GameClient(this, ip, port, id);
+                if (client.start()) {
+                    itemServerStart.setEnabled(false);
+                    itemClientStart.setEnabled(false);
+                    multi.setClient(client);
+                    multi.getBtnStart().setEnabled(true);
+                    multi.startNetworking(ip, port, id);
+                    isNetwork = true;
+                    isServer = true;
+                }
+            }
+        }
+    }
 
-	public void changeSpeed(Integer speed) {
-		board.changeSpeed(speed);
-	}
+    public void go_menu() {
+        this.getContentPane().remove(login);
+        this.getContentPane().add(menu);
+        this.revalidate();
+        this.repaint();
+    }
+
+    public void go_multi() {
+        this.getContentPane().remove(menu);
+        this.getContentPane().add(multi);
+        this.revalidate();
+        this.repaint();
+        client = new GameClient(this, "10.80.17.186", 9500, "test1234");
+        if (client.start()) {
+            itemServerStart.setEnabled(false);
+            itemClientStart.setEnabled(false);
+            multi.setClient(client);
+            multi.startNetworking("10.80.17.186", 9500, "test1234");
+            isNetwork = true;
+        }
+    }
+
+    public void go_single() {
+        this.getContentPane().remove(menu);
+        this.getContentPane().add(single);
+        this.revalidate();
+        this.repaint();
+    }
+
+    public JMenuItem getItemServerStart() {
+        return itemServerStart;
+    }
+
+    public JMenuItem getItemClientStart() {
+        return itemClientStart;
+    }
+
+    public MultiPlay getBoard() {
+        return multi;
+    }
+
+    public void gameStart(int speed) {
+        multi.gameStart(speed);
+    }
+
+    public boolean isNetwork() {
+        return isNetwork;
+    }
+
+    public void setNetwork(boolean isNetwork) {
+        this.isNetwork = isNetwork;
+    }
+
+    public void printSystemMessage(String msg) {
+        multi.printSystemMessage(msg);
+    }
+
+    public void printMessage(String msg) {
+        multi.printMessage(msg);
+    }
+
+    public boolean isServer() {
+        return isServer;
+    }
+
+    public void setServer(boolean isServer) {
+        this.isServer = isServer;
+    }
+
+    public void changeSpeed(Integer speed) {
+        multi.changeSpeed(speed);
+    }
 }

@@ -1,9 +1,6 @@
 package com.tetris.window;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -12,16 +9,14 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import com.tetris.classes.Block;
 import com.tetris.classes.TetrisBlock;
 import com.tetris.controller.TetrisController;
+import com.tetris.main.TetrisMain;
 import com.tetris.network.GameClient;
 import com.tetris.shape.CenterUp;
 import com.tetris.shape.LeftTwoUp;
@@ -47,11 +42,21 @@ public class SinglePlay extends JPanel implements Runnable, KeyListener, MouseLi
 	private final int MESSAGE_HEIGHT = BLOCK_SIZE * (6 + minY);
 	private final int PANEL_WIDTH = maxX*BLOCK_SIZE + MESSAGE_WIDTH + BOARD_X;
 	private final int PANEL_HEIGHT = maxY*BLOCK_SIZE + MESSAGE_HEIGHT + BOARD_Y;
+
+	ImageIcon icon1 = new ImageIcon(TetrisMain.class.getResource("../images/start_btn.png"));
+	Image image1 = icon1.getImage();
+	Image newimg1 = image1.getScaledInstance(140, 60, java.awt.Image.SCALE_SMOOTH);
+	private final ImageIcon start = new ImageIcon(newimg1);
+
+	ImageIcon icon2 = new ImageIcon(TetrisMain.class.getResource("../images/back_btn.png"));
+	Image image2 = icon2.getImage();
+	Image newimg2 = image2.getScaledInstance(140, 60, java.awt.Image.SCALE_SMOOTH);
+	private final ImageIcon back = new ImageIcon(newimg2);
 	
 	private SystemMessageArea systemMsg = new SystemMessageArea(BLOCK_SIZE*1,BOARD_Y + BLOCK_SIZE + BLOCK_SIZE*7, BLOCK_SIZE*5, BLOCK_SIZE*12);
 	private MessageArea messageArea = new MessageArea(this,2, PANEL_HEIGHT - (MESSAGE_HEIGHT-MESSAGE_X), PANEL_WIDTH-BLOCK_SIZE*7-2, MESSAGE_HEIGHT-2);
-	private JButton btnStart = new JButton("START");
-	private JButton btnBack = new JButton("BACK");
+	private JButton btnStart = new JButton(start);
+	private JButton btnBack = new JButton(back);
 	private JCheckBox checkGhost = new JCheckBox("Ghost mode",true);
 	private JCheckBox checkGrid  = new JCheckBox("Show grid",true);
 	private Integer[] lv = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
@@ -362,7 +367,7 @@ public class SinglePlay extends JPanel implements Runnable, KeyListener, MouseLi
 
 	
 	/**
-	 * 留�(蹂댁씠湲�, �끉由�)�쓣 �긽�븯濡� �씠�룞�븳�떎.
+	 * 留?(蹂댁씠湲?, ?끉由?)?쓣 ?긽?븯濡? ?씠?룞?븳?떎.
 	 * @param lineNumber	
 	 * @param num -1 or 1
 	 */

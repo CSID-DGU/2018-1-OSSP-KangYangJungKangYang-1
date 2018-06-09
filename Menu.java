@@ -1,10 +1,6 @@
 package com.tetris.window;
 
-import java.awt.Color;
-import java.awt.Desktop;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -28,7 +24,7 @@ public class Menu extends JPanel implements Runnable, KeyListener, MouseListener
 	private Tetris tetris;
 	private GameClient client;
 	
-	private ImageIcon background = new ImageIcon(TetrisMain.class.getResource("../images/Background.jpg"));
+	private ImageIcon background = new ImageIcon(TetrisMain.class.getResource("../images/Background.png"));
 	
 	public static final int BLOCK_SIZE = 20;
 	public static final int BOARD_X = 120;
@@ -39,7 +35,7 @@ public class Menu extends JPanel implements Runnable, KeyListener, MouseListener
 	private final int MESSAGE_HEIGHT = BLOCK_SIZE * (6 + minY);
 	private final int PANEL_WIDTH = maxX*BLOCK_SIZE + MESSAGE_WIDTH + BOARD_X;
 	private final int PANEL_HEIGHT = maxY*BLOCK_SIZE + MESSAGE_HEIGHT + BOARD_Y;
-	
+
 	ImageIcon icon1 = new ImageIcon(TetrisMain.class.getResource("../images/multi_btn.png"));
 	Image image1 = icon1.getImage();
 	Image newimg1 = image1.getScaledInstance(150, 60, java.awt.Image.SCALE_SMOOTH);
@@ -59,23 +55,23 @@ public class Menu extends JPanel implements Runnable, KeyListener, MouseListener
 	Image image4 = icon4.getImage();
 	Image newimg4 = image4.getScaledInstance(150, 60, java.awt.Image.SCALE_SMOOTH);
 	private final ImageIcon exit = new ImageIcon(newimg4);
-	
+
 	private JLabel menu_label = new JLabel("Game Menu");
-	private JButton btnMulti = new JButton("Multi Play");
-	private JButton btnSingle = new JButton("Single Play");
-	private JButton btnRank = new JButton("Rank");
-	private JButton btnExit = new JButton("Exit");
+	private JButton btnMulti = new JButton(multi);
+	private JButton btnSingle = new JButton(single);
+	private JButton btnRank = new JButton(rank);
+	private JButton btnExit = new JButton(exit);
 	
 	public Menu(Tetris tetris, GameClient client) {
 		this.tetris = tetris;
 		this.client = client;
-		this.setPreferredSize(new Dimension(PANEL_WIDTH,PANEL_HEIGHT));//기본크기
+		this.setPreferredSize(new Dimension(PANEL_WIDTH,PANEL_HEIGHT));
 		this.addKeyListener(this);
 		this.addMouseListener(this);
 		this.setLayout(null);
 		this.setFocusable(true);
 		
-		menu_label.setBounds(PANEL_WIDTH - 310, PANEL_HEIGHT - 525, 200, 50);
+		menu_label.setBounds(PANEL_WIDTH - 310, PANEL_HEIGHT - 530, 200, 50);
 		btnMulti.setBounds(PANEL_WIDTH - 300, PANEL_HEIGHT - 450, 150, 60);
 		btnMulti.setFocusable(false);
 		btnMulti.addActionListener(this);
@@ -101,7 +97,10 @@ public class Menu extends JPanel implements Runnable, KeyListener, MouseListener
 	
 	
 	public void paintComponent(Graphics g) {
-        g.drawImage(background.getImage(), 0, 0, null);
+		Image img = background.getImage();
+		Image img2 = img.getScaledInstance(PANEL_WIDTH, PANEL_HEIGHT, Image.SCALE_SMOOTH);
+		ImageIcon background2 = new ImageIcon(img2);
+        g.drawImage(background2.getImage(), 0, 0, null);
         setOpaque(false);
         super.paintComponent(g);
     }

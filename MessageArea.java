@@ -13,13 +13,13 @@ import javax.swing.ScrollPaneConstants;
 public class MessageArea extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
-	private TetrisBoard board;
+	private MultiPlay board;
 	private SinglePlay single;
 	private JTextArea area = new JTextArea();
 	private JTextField txtField = new JTextField();
-	private String[] swear_word = { "fuck" };
+	private String[] swear_word = { "사랑합니다" };
 
-	public MessageArea(TetrisBoard board, int x, int y, int width, int height) {
+	public MessageArea(MultiPlay board, int x, int y, int width, int height) {
 		this.board = board;
 		this.setLayout(new BorderLayout(2, 2));
 		this.setBounds(x, y, width, height);
