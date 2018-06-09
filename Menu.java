@@ -40,6 +40,26 @@ public class Menu extends JPanel implements Runnable, KeyListener, MouseListener
 	private final int PANEL_WIDTH = maxX*BLOCK_SIZE + MESSAGE_WIDTH + BOARD_X;
 	private final int PANEL_HEIGHT = maxY*BLOCK_SIZE + MESSAGE_HEIGHT + BOARD_Y;
 	
+	ImageIcon icon1 = new ImageIcon(TetrisMain.class.getResource("../images/multi_btn.png"));
+	Image image1 = icon1.getImage();
+	Image newimg1 = image1.getScaledInstance(150, 60, java.awt.Image.SCALE_SMOOTH);
+	private final ImageIcon multi = new ImageIcon(newimg1);
+
+	ImageIcon icon2 = new ImageIcon(TetrisMain.class.getResource("../images/single_btn.png"));
+	Image image2 = icon2.getImage();
+	Image newimg2 = image2.getScaledInstance(150, 60, java.awt.Image.SCALE_SMOOTH);
+	private final ImageIcon single = new ImageIcon(newimg2);
+
+	ImageIcon icon3 = new ImageIcon(TetrisMain.class.getResource("../images/rank_btn.png"));
+	Image image3 = icon3.getImage();
+	Image newimg3 = image3.getScaledInstance(150, 60, java.awt.Image.SCALE_SMOOTH);
+	private final ImageIcon rank = new ImageIcon(newimg3);
+
+	ImageIcon icon4 = new ImageIcon(TetrisMain.class.getResource("../images/exit_btn.png"));
+	Image image4 = icon4.getImage();
+	Image newimg4 = image4.getScaledInstance(150, 60, java.awt.Image.SCALE_SMOOTH);
+	private final ImageIcon exit = new ImageIcon(newimg4);
+	
 	private JLabel menu_label = new JLabel("Game Menu");
 	private JButton btnMulti = new JButton("Multi Play");
 	private JButton btnSingle = new JButton("Single Play");
