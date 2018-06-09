@@ -178,11 +178,15 @@ public class MultiPlay extends JPanel implements Runnable, KeyListener, MouseLis
         th.start();
     }
 
-    public void gameReset(){
+    public void gameReset() {
         //들고 있을 스레드를 정지시킨다.
-        if(th!=null){
-            try {isPlay = false;th.join();}
-            catch (InterruptedException e) {e.printStackTrace();}
+        if (th != null) {
+            try {
+                isPlay = false;
+                th.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
         //맵 셋팅
@@ -192,14 +196,14 @@ public class MultiPlay extends JPanel implements Runnable, KeyListener, MouseLis
 
         //도형 셋팅
         shap = getRandomTetrisBlock();
-        ghost = getBlockClone(shap,true);
+        ghost = getBlockClone(shap, true);
         hold = null;
         isHold = false;
         score = 0;
-        controller = new TetrisController(shap,maxX-1,maxY-1,map);
-        controllerGhost = new TetrisController(ghost,maxX-1,maxY-1,map);
+        controller = new TetrisController(shap, maxX - 1, maxY - 1, map);
+        controllerGhost = new TetrisController(ghost, maxX - 1, maxY - 1, map);
         this.showGhost();
-        for(int i=0 ; i<5 ; i++){
+        for (int i = 0; i < 5; i++) {
             nextBlocks.add(getRandomTetrisBlock());
         }
     }
@@ -208,7 +212,6 @@ public class MultiPlay extends JPanel implements Runnable, KeyListener, MouseLis
     @Override
     protected void paintComponent(Graphics g) {
         g.clearRect(0, 0, this.getWidth(), this.getHeight() + 1);
-
 
         g.setColor(new Color(0, 0, 0));
         g.fillRect(0, 0, (maxX + minX + 13) * BLOCK_SIZE + 1, BOARD_Y);
@@ -564,9 +567,11 @@ public class MultiPlay extends JPanel implements Runnable, KeyListener, MouseLis
 
             pstmt.setString(1, end_score);
             pstmt.setString(2, end_id);
-            //ResultSet rs = st.executeQuery(sql);
             pstmt.executeUpdate();
             connection.close();
+
+            JOptionPane.showMessageDialog(null, "Game Result\n\n" + "My Score : " + end_score + "\nOpponent Score");
+
         } catch (SQLException se1) {
             se1.printStackTrace();
         } catch (Exception ex) {
@@ -790,7 +795,11 @@ public class MultiPlay extends JPanel implements Runnable, KeyListener, MouseLis
                 this.gameStart((int) comboSpeed.getSelectedItem());
             }
         } else if (e.getSource() == btnBack) {
+            this.gameEndCallBack();
             this.gameReset();
+
+
+
             this.tetris.getContentPane().remove(this);
             this.tetris.go_menu();
 
