@@ -58,9 +58,8 @@ public class Tetris extends JFrame implements ActionListener {
         text = new JLabel();
 
         panel.setBorder(BorderFactory.createEmptyBorder(8, 4, 8, 4)); //
+
         //frame.setLocationRelativeTo(board); //
-
-
         //mnGame.add(itemServerStart);
         //mnGame.add(itemClientStart);
         //mnBar.add(mnGame);
@@ -90,45 +89,43 @@ public class Tetris extends JFrame implements ActionListener {
             @Override
             public void windowClosing(WindowEvent e) {
 
-                {
-                    Connection connection = null;
-                    Statement st = null;
+                Connection connection = null;
+                Statement st = null;
+                try {
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    connection = DriverManager.getConnection(info[0],info[1],info[2]);
+
+                    System.out.println("BAConnection Success");
+                    st = connection.createStatement();
+
+                    String sql;
+
+                    //출력 : 현재 방을 개설한 사람이 없습니다.
+
+                    //방을 열은 사람이 없는 것
+                    //자신의 openroom을 1로 변경하고 대기
+                    sql = "update user_info set open_room = 0 WHERE ID = ?;";
+
+
+                    System.out.println("check other_ip_1");
+                    PreparedStatement pst = connection.prepareStatement(sql);
+                    pst.setString(1, login.getId());
+                    pst.executeUpdate();
+
+                    st.close();
+                    connection.close();
+                }
+                catch(SQLException se1){
+                    se1.printStackTrace();
+                }
+                catch(Exception ex){
+                    ex.printStackTrace();
+                }finally {
                     try {
-                        Class.forName("com.mysql.cj.jdbc.Driver");
-                        connection = DriverManager.getConnection(info[0],info[1],info[2]);
-
-                        System.out.println("BAConnection Success");
-                        st = connection.createStatement();
-
-                        String sql;
-
-                        //출력 : 현재 방을 개설한 사람이 없습니다.
-
-                        //방을 열은 사람이 없는 것
-                        //자신의 openroom을 1로 변경하고 대기
-                        sql = "update user_info set open_room = 0 WHERE ID = ?;";
-
-
-                        System.out.println("check other_ip_1");
-                        PreparedStatement pst = connection.prepareStatement(sql);
-                        pst.setString(1, login.getId());
-                        pst.executeUpdate();
-
-                        st.close();
-                        connection.close();
-                    }
-                    catch(SQLException se1){
-                        se1.printStackTrace();
-                    }
-                    catch(Exception ex){
-                        ex.printStackTrace();
-                    }finally {
-                        try {
-                            if(connection != null){
-                                connection.close();
-                            }
-                        }catch(Exception ex){}
-                    }
+                        if(connection != null){
+                            connection.close();
+                        }
+                    }catch(Exception ex){}
                 }
 
                 if (client != null) {
@@ -295,7 +292,25 @@ public class Tetris extends JFrame implements ActionListener {
         this.repaint();
     }
 
+    public void multi_to_menu(){
+
+        if (client != null) {
+            if (isNetwork) {
+                client.closeNetwork(isServer);
+            }
+        }
+
+        this.getContentPane().remove(multi);
+        this.getContentPane().add(menu);
+        this.revalidate();
+        this.repaint();
+
+    }
+
+
     public void go_multi() {
+
+
         this.getContentPane().remove(menu);
         this.getContentPane().add(multi);
         this.revalidate();
@@ -315,10 +330,11 @@ public class Tetris extends JFrame implements ActionListener {
                 System.out.println("Connection Success");
                 st = connection.createStatement();
 
-                String sql;
+                String sql1;
+                String sql2;
 
-                sql = "select IP FROM user_info WHERE open_room = 1 LIMIT 1;";
-                PreparedStatement pstmt = connection.prepareStatement(sql);
+                sql1 = "select IP FROM user_info WHERE open_room = 1 LIMIT 1;";
+                PreparedStatement pstmt = connection.prepareStatement(sql1);
 
                 //pstmt.setString(1, login.getId());
                 ResultSet rs = pstmt.executeQuery();
@@ -337,30 +353,64 @@ public class Tetris extends JFrame implements ActionListener {
 
                     //방을 열은 사람이 없는 것
                     //자신의 openroom을 1로 변경하고 대기
-                    sql = "update user_info set open_room = 1 WHERE ID = ?;";
-
-
+                    sql2 = "update user_info set open_room = 1 where ID = ?;";
                     System.out.println("check other_ip_1");
-                    PreparedStatement pst = connection.prepareStatement(sql);
+
+                    PreparedStatement pst = connection.prepareStatement(sql2);
+                    System.out.println((login.getId()));
+
                     pst.setString(1, login.getId());
                     pst.executeUpdate();
 
+                    //server = new GameServer(9500);
+                    //server.startServer();
+
+                    //if (login.getIp() != null) {
+                    //    client = new GameClient(this, login.getIp(), 9500, login.getName());
+                    //    if (client.start()) {
+                    //        itemServerStart.setEnabled(false);
+                    //        itemClientStart.setEnabled(false);
+                    //        multi.setClient(client);
+                    //        multi.getBtnStart().setEnabled(true);
+                    //        multi.startNetworking(login.getIp(), 9500, login.getName());
+                    //        isNetwork = true;
+                    //        isServer = true;
+                    //    }
+                   // }
+                    user_Login();
+
                     System.out.println("check other_ip_2");
+
                 }
                 else
                 {
                     //출력 : 상대방이 검색 되었습니다.
+
                     System.out.println("check other_ip else");
                     //Other_IP에 상대방의 ip 정보가 들어가 있음
                     //위에 것이 상대방 ip 정보
                     client = new GameClient(this, Other_IP , 9500, "OTHER");
+
+                    Thread.sleep((100));
+
                     if (client.start()) {
-                       itemServerStart.setEnabled(false);
+                        itemServerStart.setEnabled(false);
                         itemClientStart.setEnabled(false);
                         multi.setClient(client);
                         multi.startNetworking(login.getIp(), 9500, "MY");
                         isNetwork = true;
                     }
+                    else
+                    {
+                        System.out.println("time out 또는 client 오류");
+                        //오류 발생
+                        //다시 메뉴 화면으로 복귀
+                    }
+
+                    sql2 = "update user_info set open_room = 2 where ID = ?;";
+                    PreparedStatement pst = connection.prepareStatement(sql2);
+                    pst.setString(1, login.getId());
+                    pst.executeUpdate();
 
                 }
                 rs.close();
@@ -380,6 +430,7 @@ public class Tetris extends JFrame implements ActionListener {
                 }catch(Exception ex){}
             }
         }
+
         //서버 접속
 
 
