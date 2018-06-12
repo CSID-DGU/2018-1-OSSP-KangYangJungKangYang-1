@@ -58,9 +58,8 @@ public class Tetris extends JFrame implements ActionListener {
         text = new JLabel();
 
         panel.setBorder(BorderFactory.createEmptyBorder(8, 4, 8, 4)); //
+
         //frame.setLocationRelativeTo(board); //
-
-
         //mnGame.add(itemServerStart);
         //mnGame.add(itemClientStart);
         //mnBar.add(mnGame);
@@ -274,8 +273,6 @@ public class Tetris extends JFrame implements ActionListener {
             if (ip != null) {
                 client = new GameClient(this, ip, port, id);
                 if (client.start()) {
-                    itemServerStart.setEnabled(false);
-                    itemClientStart.setEnabled(false);
                     multi.setClient(client);
                     multi.getBtnStart().setEnabled(true);
                     multi.startNetworking(ip, port, id);
@@ -293,15 +290,29 @@ public class Tetris extends JFrame implements ActionListener {
         this.repaint();
     }
 
+    public void multi_to_menu(){
+
+        if (client != null) {
+            if (isNetwork) {
+                client.closeNetwork(isServer);
+            }
+        }
+
+        this.getContentPane().remove(multi);
+        this.getContentPane().add(menu);
+        this.revalidate();
+        this.repaint();
+
+    }
+
+
     public void go_multi() {
+
+
         this.getContentPane().remove(menu);
         this.getContentPane().add(multi);
         this.revalidate();
         this.repaint();
-
-        //mysql 연결 멀티로 들어가면 openroom 1로 변경
-        String curret_login_id = login.getId();
-
 
         {
             Connection connection = null;
@@ -318,8 +329,6 @@ public class Tetris extends JFrame implements ActionListener {
 
                 sql1 = "select IP FROM user_info WHERE open_room = 1 LIMIT 1;";
                 PreparedStatement pstmt = connection.prepareStatement(sql1);
-
-                //pstmt.setString(1, login.getId());
                 ResultSet rs = pstmt.executeQuery();
 
                 String Other_IP ="";
@@ -330,38 +339,30 @@ public class Tetris extends JFrame implements ActionListener {
 
                 System.out.println(Other_IP);
 
-                if(Other_IP == "")
-                {
-                    //출력 : 현재 방을 개설한 사람이 없습니다.
+                if(Other_IP == "") {
+                    JOptionPane.showMessageDialog(null, "현재 방을 개설한 사람이 없습니다.");
 
-                    //방을 열은 사람이 없는 것
-                    //자신의 openroom을 1로 변경하고 대기
                     sql2 = "update user_info set open_room = 1 where ID = ?;";
-
-
-                    System.out.println("check other_ip_1");
                     PreparedStatement pst = connection.prepareStatement(sql2);
-                    System.out.println((login.getId()));
-
                     pst.setString(1, login.getId());
                     pst.executeUpdate();
 
-                    System.out.println("check other_ip_2");
-
+                    user_Login();
                 }
-                else
-                {
-                    //출력 : 상대방이 검색 되었습니다.
-                    System.out.println("check other_ip else");
-                    //Other_IP에 상대방의 ip 정보가 들어가 있음
-                    //위에 것이 상대방 ip 정보
+                else {
+                    JOptionPane.showMessageDialog(null, "상대방이 검색 되었습니다.");
+
                     client = new GameClient(this, Other_IP , 9500, "OTHER");
+
+                    Thread.sleep((100));
+
                     if (client.start()) {
-                        itemServerStart.setEnabled(false);
-                        itemClientStart.setEnabled(false);
                         multi.setClient(client);
-                        multi.startNetworking(login.getIp(), 9500, "MY");
+                        multi.startNetworking(login.getIp(), 9500, login.getId());
                         isNetwork = true;
+                    }
+                    else {
+                        System.out.println("Client Error");
                     }
 
                     sql2 = "update user_info set open_room = 2 where ID = ?;";
@@ -387,33 +388,6 @@ public class Tetris extends JFrame implements ActionListener {
                 }catch(Exception ex){}
             }
         }
-        //서버 접속
-
-
-        //멀티 접속 >> mysql openroom이 1인 것을 찾고 있으면 둘이 연결하고 2로 바꿔주고
-        //없으면 서버로 접속해서 openroom을 1로 바꿔주고 대기한다.
-
-
-
-
-        // open room 이 1 인 애들 중에서 한명 선택해서 ip를 넣어주고
-
-        //ip와 nickname을 넣고
-        //아래는 자기의 ip와 닉네임
-
-        //mysql에 openroom 2로 바꿔서 하다가
-
-
-
-        //플레이 실행 중
-
-
-        //플레이 둘 중 한명 끝났을 때
-        //......
-
-        //
-        //내가 죽으면 서버에 1로 던지고
-
     }
 
     public void go_single() {

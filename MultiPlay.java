@@ -17,7 +17,9 @@ import com.tetris.classes.Block;
 import com.tetris.classes.TetrisBlock;
 import com.tetris.controller.TetrisController;
 import com.tetris.main.TetrisMain;
+import com.tetris.network.DataShip;
 import com.tetris.network.GameClient;
+import com.tetris.network.GameServer;
 import com.tetris.shape.CenterUp;
 import com.tetris.shape.LeftTwoUp;
 import com.tetris.shape.LeftUp;
@@ -33,6 +35,11 @@ public class MultiPlay extends JPanel implements Runnable, KeyListener, MouseLis
 
     private Tetris tetris;
     private GameClient client;
+    private GameServer Server;
+
+    private boolean isNetwork;
+    private boolean isServer;
+
 
     public static final int BLOCK_SIZE = 20;
     public static final int BOARD_X = 120;
@@ -148,10 +155,14 @@ public class MultiPlay extends JPanel implements Runnable, KeyListener, MouseLis
 
     public void gameStart(int speed) {
         comboSpeed.setSelectedItem(new Integer(speed));
+
         if (th != null) {
             try {
+
+                //****************************************************************
                 isPlay = false;
                 th.join();
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -492,6 +503,8 @@ public class MultiPlay extends JPanel implements Runnable, KeyListener, MouseLis
                 map[mainBlock.getY()][mainBlock.getX()] = mainBlock;
 
             if (mainBlock.getY() == 1 && mainBlock.getX() > 2 && mainBlock.getX() < 7) {
+
+                //여러번 불려짐
                 this.gameEndCallBack();
                 break;
             }
@@ -550,6 +563,7 @@ public class MultiPlay extends JPanel implements Runnable, KeyListener, MouseLis
 
 
     public void gameEndCallBack() {
+
         String end_id = this.nickName;
         String end_score = Integer.toString(this.score);
 
@@ -557,6 +571,7 @@ public class MultiPlay extends JPanel implements Runnable, KeyListener, MouseLis
         Statement st = null;
 
         try {
+
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(tetris.info[0], tetris.info[1], tetris.info[2]);
 
@@ -569,8 +584,13 @@ public class MultiPlay extends JPanel implements Runnable, KeyListener, MouseLis
             pstmt.setString(2, end_id);
             pstmt.executeUpdate();
             connection.close();
+            JOptionPane.showMessageDialog(null, "Game Over");
+            Thread.sleep(100);
+            //this.tetris.multi_to_menu();
 
-            JOptionPane.showMessageDialog(null, "Game Result\n\n" + "My Score : " + end_score + "\nOpponent Score");
+            this.isPlay = false;
+            client.gameover();
+            //client.reCloseNetwork();
 
         } catch (SQLException se1) {
             se1.printStackTrace();
@@ -585,8 +605,12 @@ public class MultiPlay extends JPanel implements Runnable, KeyListener, MouseLis
             }
         }
 
-        client.gameover();
-        this.isPlay = false;
+
+        //this.tetris.multi_to_menu();
+        //client.reSetIndex(0);
+
+        //client.closeNetwork(this.isPlay);
+        //client.gameover();
     }
 
 
@@ -795,8 +819,10 @@ public class MultiPlay extends JPanel implements Runnable, KeyListener, MouseLis
                 this.gameStart((int) comboSpeed.getSelectedItem());
             }
         } else if (e.getSource() == btnBack) {
-            this.gameEndCallBack();
-            this.gameReset();
+
+            //******************************************************************************************************
+            //this.tetris.multi_to_menu();
+
 
             //쿼리문 자기 것 open_room = 0 으로 바꾸는 것
             {
@@ -811,20 +837,19 @@ public class MultiPlay extends JPanel implements Runnable, KeyListener, MouseLis
 
                     String sql;
 
-                    //출력 : 현재 방을 개설한 사람이 없습니다.
-
-                    //방을 열은 사람이 없는 것
-                    //자신의 openroom을 1로 변경하고 대기
                     sql = "update user_info set open_room = 0 WHERE ID = ?;";
-
-
-                    System.out.println("check other_ip_1");
+                    System.out.println("update flag 0 in btnback");
                     PreparedStatement pst = connection.prepareStatement(sql);
                     pst.setString(1, tetris.login.getId());
                     pst.executeUpdate();
 
                     st.close();
                     connection.close();
+                    String end_score = Integer.toString(this.score);
+
+
+                    JOptionPane.showMessageDialog(null, "Game Result\n\n" + "My Score : " + end_score + "\nOpponent Score");
+
                 }
                 catch(SQLException se1){
                     se1.printStackTrace();
@@ -839,9 +864,8 @@ public class MultiPlay extends JPanel implements Runnable, KeyListener, MouseLis
                     }catch(Exception ex){}
                 }
             }
-
-            this.tetris.getContentPane().remove(this);
-            this.tetris.go_menu();
+            this.gameReset();
+            this.tetris.multi_to_menu();
 
         }
     }
@@ -887,4 +911,7 @@ public class MultiPlay extends JPanel implements Runnable, KeyListener, MouseLis
         systemMsg.clearMessage();
     }
 
+    public GameServer getGameServer() {
+        return Server;
+    }
 }
