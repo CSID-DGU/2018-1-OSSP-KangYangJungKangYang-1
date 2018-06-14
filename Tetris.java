@@ -8,12 +8,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.sql.*;
 
+import javax.sound.sampled.*;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -34,13 +34,14 @@ public class Tetris extends JFrame implements ActionListener {
     private Menu menu = new Menu(this, client);
     private MultiPlay multi = new MultiPlay(this, client);
     private SinglePlay single = new SinglePlay(this, client);
-    private JMenuItem itemServerStart = new JMenuItem("Connect with Server");
-    private JMenuItem itemClientStart = new JMenuItem("Access as a Client");
+    private JMenuItem itemPlayMusic = new JMenuItem("Play Music");
     private JMenuItem itemGameManual = new JMenuItem("Game Manual");
     private JMenuItem itemAboutGame = new JMenuItem("About Game");
 
     private boolean isNetwork;
     private boolean isServer;
+    private boolean isMusicPlay;
+    Clip clip;
 
     private final JFrame frame;
     private final JPanel panel;
@@ -50,8 +51,7 @@ public class Tetris extends JFrame implements ActionListener {
 
     public Tetris() {
         JMenuBar mnBar = new JMenuBar();
-        //JMenu mnGame = new JMenu("Connection");
-        JMenu mnAbout = new JMenu("About");
+        JMenu mnMenu = new JMenu("Game Menu");
 
         frame = new JFrame();
         panel = new JPanel(new FlowLayout());
@@ -59,14 +59,10 @@ public class Tetris extends JFrame implements ActionListener {
 
         panel.setBorder(BorderFactory.createEmptyBorder(8, 4, 8, 4)); //
 
-        //frame.setLocationRelativeTo(board); //
-        //mnGame.add(itemServerStart);
-        //mnGame.add(itemClientStart);
-        //mnBar.add(mnGame);
-
-        mnAbout.add(itemGameManual);
-        mnAbout.add(itemAboutGame);
-        mnBar.add(mnAbout);
+        mnMenu.add(itemPlayMusic);
+        mnMenu.add(itemGameManual);
+        mnMenu.add(itemAboutGame);
+        mnBar.add(mnMenu);
 
         this.setJMenuBar(mnBar);
 
@@ -81,8 +77,7 @@ public class Tetris extends JFrame implements ActionListener {
         frame.setLocation((size.width - this.getWidth()) / 2, (size.height - this.getHeight()));
         this.setVisible(true);
 
-        itemServerStart.addActionListener(this);
-        itemClientStart.addActionListener(this);
+        itemPlayMusic.addActionListener(this);
         itemGameManual.addActionListener(this);
         itemAboutGame.addActionListener(this);
         this.addWindowListener(new WindowAdapter() {
@@ -98,16 +93,7 @@ public class Tetris extends JFrame implements ActionListener {
                     System.out.println("BAConnection Success");
                     st = connection.createStatement();
 
-                    String sql;
-
-                    //출력 : 현재 방을 개설한 사람이 없습니다.
-
-                    //방을 열은 사람이 없는 것
-                    //자신의 openroom을 1로 변경하고 대기
-                    sql = "update user_info set open_room = 0 WHERE ID = ?;";
-
-
-                    System.out.println("check other_ip_1");
+                    String sql = "update user_info set open_room = 0 WHERE ID = ?;";
                     PreparedStatement pst = connection.prepareStatement(sql);
                     pst.setString(1, login.getId());
                     pst.executeUpdate();
@@ -150,65 +136,38 @@ public class Tetris extends JFrame implements ActionListener {
             fe.printStackTrace();
         }
 
+        try {
+            this.playMusic();
+            isMusicPlay = true;
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        String ip = null;
-        int port = 0;
-        String nickName = null;
-        if (e.getSource() == itemServerStart) {
-
-            String sp = JOptionPane.showInputDialog("Enter Port Number", "9500");
-            if (sp != null && !sp.equals(""))
-                port = Integer.parseInt(sp);
-            nickName = JOptionPane.showInputDialog("Enter Your ID", "User1");
-
-            if (port != 0) {
-                if (server == null)
-                    server = new GameServer(port);
-                server.startServer();
+        if(e.getSource() == itemPlayMusic) {
+            if(isMusicPlay){
+                clip.stop();
+                clip.close();
+                isMusicPlay = false;
+            }
+            else{
                 try {
-                    ip = InetAddress.getLocalHost().getHostAddress();
-                } catch (UnknownHostException e1) {
+                    AudioInputStream ais = AudioSystem.getAudioInputStream(new BufferedInputStream(new FileInputStream("bgm.wav")));
+                    clip.open(ais);
+                    clip.start();
+                    isMusicPlay = true;
+                } catch (UnsupportedAudioFileException e1) {
+                    e1.printStackTrace();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                } catch (LineUnavailableException e1) {
                     e1.printStackTrace();
                 }
-                if (ip != null) {
-                    client = new GameClient(this, ip, port, nickName);
-                    if (client.start()) {
-                        itemServerStart.setEnabled(false);
-                        itemClientStart.setEnabled(false);
-                        multi.setClient(client);
-                        multi.getBtnStart().setEnabled(true);
-                        multi.startNetworking(ip, port, nickName);
-                        isNetwork = true;
-                        isServer = true;
-                    }
-                }
-            }
-        } else if (e.getSource() == itemClientStart) {
-            try {
-                ip = InetAddress.getLocalHost().getHostAddress();
-            } catch (UnknownHostException e1) {
-                e1.printStackTrace();
-            }
 
-            ip = JOptionPane.showInputDialog("Enter Your IP", ip);
-            String sp = JOptionPane.showInputDialog("Enter Port Number", "9500");
-            if (sp != null && !sp.equals(""))
-                port = Integer.parseInt(sp);
-            nickName = JOptionPane.showInputDialog("Enter Your ID", "User2");
-
-            if (ip != null) {
-                client = new GameClient(this, ip, port, nickName);
-                if (client.start()) {
-                    itemServerStart.setEnabled(false);
-                    itemClientStart.setEnabled(false);
-                    multi.setClient(client);
-                    multi.startNetworking(ip, port, nickName);
-                    isNetwork = true;
-                }
             }
         } else if (e.getSource() == itemGameManual) {
             frame.setTitle("Tetris Game Manual");
@@ -244,8 +203,6 @@ public class Tetris extends JFrame implements ActionListener {
     public void closeNetwork() {
         isNetwork = false;
         client = null;
-        itemServerStart.setEnabled(true);
-        itemClientStart.setEnabled(true);
         multi.setPlay(false);
         multi.setClient(null);
     }
@@ -271,7 +228,7 @@ public class Tetris extends JFrame implements ActionListener {
                 e1.printStackTrace();
             }
             if (ip != null) {
-                client = new GameClient(this, ip, port, id);
+                client = new GameClient(this, ip, port, "Other");
                 if (client.start()) {
                     multi.setClient(client);
                     multi.getBtnStart().setEnabled(false);
@@ -353,13 +310,13 @@ public class Tetris extends JFrame implements ActionListener {
                 else {
                     JOptionPane.showMessageDialog(null, "상대방이 검색 되었습니다.");
 
-                    client = new GameClient(this, Other_IP , 9500, "OTHER");
+                    client = new GameClient(this,  login.getIp(), 9500, login.getId());
 
                     Thread.sleep((100));
 
                     if (client.start()) {
                         multi.setClient(client);
-                        multi.startNetworking(login.getIp(), 9500, login.getId());
+                        multi.startNetworking(Other_IP, 9500, "Other");
                         isNetwork = true;
                     }
                     else {
@@ -398,12 +355,18 @@ public class Tetris extends JFrame implements ActionListener {
         this.repaint();
     }
 
-    public JMenuItem getItemServerStart() {
-        return itemServerStart;
-    }
-
-    public JMenuItem getItemClientStart() {
-        return itemClientStart;
+    public void playMusic() throws LineUnavailableException {
+        try {
+            AudioInputStream ais = AudioSystem.getAudioInputStream(new BufferedInputStream(new FileInputStream("bgm.wav")));
+            clip = AudioSystem.getClip();
+            clip.loop(10);
+            clip.open(ais);
+            clip.start();
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public MultiPlay getBoard() {

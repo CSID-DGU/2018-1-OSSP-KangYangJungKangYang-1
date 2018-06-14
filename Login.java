@@ -32,7 +32,6 @@ import javax.swing.JOptionPane;
 
 
 import java.sql.*;
-import java.util.Scanner;
 
 import com.tetris.main.TetrisMain;
 import com.tetris.network.GameClient;
@@ -83,7 +82,8 @@ public class Login extends JPanel implements Runnable, KeyListener, MouseListene
 	private String pw;
 
 	public Login(Tetris tetris, GameClient client) {
-		this.tetris = tetris;
+
+        this.tetris = tetris;
 		this.client = client;
 		this.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
 		this.addKeyListener(this);
