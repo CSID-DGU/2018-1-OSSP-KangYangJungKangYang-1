@@ -274,7 +274,7 @@ public class Tetris extends JFrame implements ActionListener {
                 client = new GameClient(this, ip, port, id);
                 if (client.start()) {
                     multi.setClient(client);
-                    multi.getBtnStart().setEnabled(true);
+                    multi.getBtnStart().setEnabled(false);
                     multi.startNetworking(ip, port, id);
                     isNetwork = true;
                     isServer = true;
@@ -348,6 +348,7 @@ public class Tetris extends JFrame implements ActionListener {
                     pst.executeUpdate();
 
                     user_Login();
+                    multi.getBtnStart().setEnabled(true);
                 }
                 else {
                     JOptionPane.showMessageDialog(null, "상대방이 검색 되었습니다.");

@@ -815,16 +815,13 @@ public class MultiPlay extends JPanel implements Runnable, KeyListener, MouseLis
         if (e.getSource() == btnStart) {
             if (client != null) {
                 client.gameStart((int) comboSpeed.getSelectedItem());
+                this.getBtnStart().setEnabled(false);
             } else {
                 this.gameStart((int) comboSpeed.getSelectedItem());
+                this.getBtnStart().setEnabled(false);
             }
         } else if (e.getSource() == btnBack) {
 
-            //******************************************************************************************************
-            //this.tetris.multi_to_menu();
-
-
-            //쿼리문 자기 것 open_room = 0 으로 바꾸는 것
             {
                 Connection connection = null;
                 Statement st = null;

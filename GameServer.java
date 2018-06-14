@@ -1,9 +1,11 @@
 package com.tetris.network;
 
 
+import javax.swing.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -45,7 +47,12 @@ class GameHandler extends Thread{
 			
 			data = (DataShip)ois.readObject();
 			printSystemOpenMessage();
-			printMessage(ip+":"+name+"님이 입장하였습니다.");
+			printMessage(ip+":"+name+" is Enter.");
+			InetAddress local = InetAddress.getLocalHost();
+			String my_ip = local.getHostAddress();
+			if(!my_ip.equals(ip)) {
+				JOptionPane.showMessageDialog(null, "Other Player is Enter");
+			}
 		}catch(IOException e){ e.printStackTrace();
 		}catch(ClassNotFoundException e){ e.printStackTrace();}
 		
@@ -66,7 +73,7 @@ class GameHandler extends Thread{
 			
 			if(data.getCommand()==DataShip.CLOSE_NETWORK){
 				printSystemMessage("<"+index+"P> EXIT");
-				printMessage(ip+":"+name+"님이 퇴장하였습니다");
+				printMessage(ip+":"+name+" is Exit.");
 				closeNetwork();
 				break;
 			}else if(data.getCommand()==DataShip.SERVER_EXIT){
@@ -234,7 +241,7 @@ class GameHandler extends Thread{
 	
 	//n명
 	private void broadcast(DataShip dataShip){
-		for(int i=0 ; i<list.size() ; i++){
+		for(int i=1 ; i<list.size() ; i++){
 			GameHandler handler = list.get(i);
 			if(handler!=null){
 				try{
