@@ -560,44 +560,12 @@ public class MultiPlay extends JPanel implements Runnable, KeyListener, MouseLis
 
     public void gameEndCallBack() {
 
-        String end_id = this.nickName;
-        String end_score = Integer.toString(this.score);
 
-        Connection connection = null;
-        Statement st = null;
 
-        try {
+        this.isPlay = false;
+        client.gameover();
 
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(tetris.info[0], tetris.info[1], tetris.info[2]);
 
-            System.out.println("Connection Success");
-            String sql;
-            sql = "UPDATE user_info set SCORE=? WHERE ID =?;";
-            PreparedStatement pstmt = connection.prepareStatement(sql);
-
-            pstmt.setString(1, end_score);
-            pstmt.setString(2, end_id);
-            pstmt.executeUpdate();
-            connection.close();
-            JOptionPane.showMessageDialog(null, "Game Over");
-            Thread.sleep(100);
-
-            this.isPlay = false;
-            client.gameover();
-
-        } catch (SQLException se1) {
-            se1.printStackTrace();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        } finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (Exception ex) {
-            }
-        }
 
     }
 
@@ -812,12 +780,20 @@ public class MultiPlay extends JPanel implements Runnable, KeyListener, MouseLis
                     pst.setString(1, tetris.login.getId());
                     pst.executeUpdate();
 
+                    String sql2 = "UPDATE user_info set SCORE=? WHERE ID =?;";
+                    PreparedStatement pstmt = connection.prepareStatement(sql2);
+
+                    pstmt.setString(1, Integer.toString(score));
+                    pstmt.setString(2, this.tetris.login.getId());
+                    pstmt.executeUpdate();
+                    connection.close();
+
                     st.close();
                     connection.close();
                     String end_score = Integer.toString(this.score);
 
 
-                    JOptionPane.showMessageDialog(null, "Game Result\n\n" + "My Score : " + end_score + "\nOpponent Score");
+                    JOptionPane.showMessageDialog(null, "Game Result\n\n" + "My Score : " + end_score);
 
                 }
                 catch(SQLException se1){
