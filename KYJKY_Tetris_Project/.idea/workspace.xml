@@ -1,0 +1,810 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="Tetris:jar" />
+    </artifacts-to-build>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="4fdb9edd-1122-44c2-bd2d-cf0dae09a9c7" name="Default" comment="" />
+    <ignored path="$PROJECT_DIR$/out/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="MultiPlay.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/tetris/window/MultiPlay.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="209">
+              <caret line="39" column="30" lean-forward="true" selection-start-line="39" selection-start-column="30" selection-end-line="39" selection-end-column="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SinglePlay.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/tetris/window/SinglePlay.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1987">
+              <caret line="224" column="57" selection-start-line="224" selection-start-column="57" selection-end-line="224" selection-end-column="57" />
+              <folding>
+                <element signature="e#19522#19523#0" expanded="true" />
+                <element signature="e#19548#19549#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DataShip.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/tetris/network/DataShip.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="874">
+              <caret line="46" column="20" selection-start-line="46" selection-start-column="20" selection-end-line="46" selection-end-column="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TetrisController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/tetris/controller/TetrisController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-304">
+              <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Block.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/tetris/classes/Block.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="38">
+              <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TetrisBlock.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/tetris/classes/TetrisBlock.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="390">
+              <caret line="67" column="7" lean-forward="true" selection-start-line="67" selection-start-column="7" selection-end-line="67" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GameClient.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/tetris/network/GameClient.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="56">
+              <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+              <folding>
+                <element signature="e#805#806#0" expanded="true" />
+                <element signature="e#834#835#0" expanded="true" />
+                <element signature="e#5444#5445#0" expanded="true" />
+                <element signature="e#5475#5476#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Login.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/tetris/window/Login.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="38">
+              <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Menu.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/tetris/window/Menu.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="35">
+              <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MessageArea.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/tetris/window/MessageArea.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="874">
+              <caret line="54" column="57" selection-start-line="54" selection-start-column="57" selection-end-line="54" selection-end-column="57" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>package com\.tetris\.window\;\n\nimport java\.awt\.Color\;\nimport java\.awt\.Cursor\;\nimport java\.awt\.Dimension\;\nimport java\.awt\.Font\;\nimport java\.awt\.Graphics\;\nimport java\.awt\.Image\;\nimport java\.awt\.event\.ActionEvent\;\nimport java\.awt\.event\.ActionListener\;\nimport java\.awt\.event\.KeyEvent\;\nimport java\.awt\.event\.KeyListener\;\nimport java\.awt\.event\.MouseAdapter\;\nimport java\.awt\.event\.MouseEvent\;\nimport java\.awt\.event\.MouseListener\;\nimport java\.awt\.event\.MouseMotionAdapter\;\nimport java\.awt\.Desktop\;\nimport java\.io\.IOException\;\n\nimport javax\.swing\.ImageIcon\;\nimport javax\.swing\.JButton\;\nimport javax\.swing\.JPanel\;\nimport javax\.swing\.JTextField\;\nimport javax\.swing\.JPasswordField\;\nimport javax\.swing\.SwingConstants\;\nimport javax\.swing\.JLabel\;\nimport javax\.swing\.JOptionPane\;\nimport java\.net\.URI\;\nimport java\.net\.URISyntaxException\;\n\nimport java\.sql\.\*\;\n\nimport com\.tetris\.main\.TetrisMain\;\nimport com\.tetris\.network\.GameClient\;\n\npublic class Login extends JPanel implements Runnable\, KeyListener\, MouseListener\, ActionListener \{\n\	private Tetris tetris\;\n\	private GameClient client\;\n\n\	private ImageIcon background \= new ImageIcon\(TetrisMain\.class\.getResource\(\&quot;\.\.\/images\/Background\.jpg\&quot;\)\)\;\n\n\	public static final int BLOCK_SIZE \= 20\;\n\	public static final int BOARD_X \= 120\;\n\	public static final int BOARD_Y \= 50\;\n\	private int minX \= 1\, minY \= 0\, maxX \= 10\, maxY \= 21\, down \= 50\, up \= 0\;\n\n\	private final int MESSAGE_WIDTH \= BLOCK_SIZE \* \(7 \+ minX\)\;\n\	private final int MESSAGE_HEIGHT \= BLOCK_SIZE \* \(6 \+ minY\)\;\n\	private final int PANEL_WIDTH \= maxX \* BLOCK_SIZE \+ MESSAGE_WIDTH \+ BOARD_X\;\n\	private final int PANEL_HEIGHT \= maxY \* BLOCK_SIZE \+ MESSAGE_HEIGHT \+ BOARD_Y\;\n\n\	private JTextField id_area \= new JTextField\(10\)\;\n\	private JPasswordField pw_area \= new JPasswordField\(10\)\;\n\	private JLabel login_label \= new JLabel\(\&quot;Login\&quot;\)\;\n\	private JLabel id_label \= new JLabel\(\&quot;ID\&quot;\)\;\n\	private JLabel pw_label \= new JLabel\(\&quot;PW\&quot;\)\;\n\	private JButton btnLogin \= new JButton\(\&quot;LOGIN\&quot;\)\;\n\	private JButton btnJoin \= new JButton\(\&quot;JOIN\&quot;\)\;\n\	private JButton btnExit \= new JButton\(\&quot;EXIT\&quot;\)\;\n\n\	private String id\;\n\	private String pw\;\n\n\	public Login\(Tetris tetris\, GameClient client\) \{\n\	\	this\.tetris \= tetris\;\n\	\	this\.client \= client\;\n\	\	this\.setPreferredSize\(new Dimension\(PANEL_WIDTH\, PANEL_HEIGHT\)\)\;\n\	\	this\.addKeyListener\(this\)\;\n\	\	this\.addMouseListener\(this\)\;\n\	\	this\.setLayout\(null\)\;\n\	\	this\.setFocusable\(true\)\;\n\n\	\	login_label\.setBounds\(PANEL_WIDTH \- 300\, PANEL_HEIGHT \- 500\, 200\, 50\)\;\n\	\	id_label\.setBounds\(PANEL_WIDTH \- 430\, PANEL_HEIGHT \- 400\, 200\, 30\)\;\n\	\	pw_label\.setBounds\(PANEL_WIDTH \- 430\, PANEL_HEIGHT \- 350\, 200\, 30\)\;\n\	\	id_area\.setBounds\(PANEL_WIDTH \- 400\, PANEL_HEIGHT \- 400\, 200\, 30\)\;\n\	\	pw_area\.setBounds\(PANEL_WIDTH \- 400\, PANEL_HEIGHT \- 350\, 200\, 30\)\;\n\	\	btnLogin\.setBounds\(PANEL_WIDTH \- 200\, PANEL_HEIGHT \- 400\, 150\, 80\)\;\n\	\	btnLogin\.setFocusable\(false\)\;\n\	\	btnLogin\.addActionListener\(this\)\;\n\	\	btnJoin\.setBounds\(PANEL_WIDTH \- 350\, PANEL_HEIGHT \- 300\, 150\, 50\)\;\n\	\	btnJoin\.setFocusable\(false\)\;\n\	\	btnJoin\.addActionListener\(this\)\;\n\	\	btnExit\.setBounds\(PANEL_WIDTH \- 200\, PANEL_HEIGHT \- 300\, 150\, 50\)\;\n\	\	btnExit\.setFocusable\(false\)\;\n\	\	btnExit\.addActionListener\(this\)\;\n\n\	\	login_label\.setForeground\(Color\.WHITE\)\;\n\	\	id_label\.setForeground\(Color\.WHITE\)\;\n\	\	pw_label\.setForeground\(Color\.WHITE\)\;\n\	\	login_label\.setFont\(new Font\(\&quot;Serif\&quot;\, Font\.BOLD\, 30\)\)\;\n\n\	\	this\.add\(id_area\)\;\n\	\	this\.add\(pw_area\)\;\n\	\	this\.add\(btnLogin\)\;\n\	\	this\.add\(btnJoin\)\;\n\	\	this\.add\(btnExit\)\;\n\	\	this\.add\(login_label\)\;\n\	\	this\.add\(id_label\)\;\n\	\	this\.add\(pw_label\)\;\n\n\	\}\n\n\	public void paintComponent\(Graphics g\) \{\n\	\	g\.drawImage\(background\.getImage\(\)\, 0\, 0\, null\)\;\n\	\	setOpaque\(false\)\;\n\	\	super\.paintComponent\(g\)\;\n\	\}\n\n\	public String getId\(\) \{\n\	\	return id\;\n\	\}\n\n\	\@SuppressWarnings\(\&quot;deprecation\&quot;\)\n\	\@Override\n\	public void actionPerformed\(ActionEvent e\) \{\n\	\	\/\/ TODO Auto\-generated method stub\n\	\	if \(e\.getSource\(\) \=\= btnLogin\) \{\n\	\	\	id \= id_area\.getText\(\)\;\n\	\	\	pw \= pw_area\.getText\(\)\;\n\	\	\	if \(client \=\= null \&amp;\&amp; \!id\.equals\(\&quot;\&quot;\) \&amp;\&amp; \!pw\.equals\(\&quot;\&quot;\)\) \{\n\	\	\	\	Connection connection \= null\;\n\	\	\	\	Statement st \= null\;\n\n\	\	\	\	try \{\n\	\	\	\	\	Class\.forName\(\&quot;com\.mysql\.jdbc\.Driver\&quot;\)\;\n\	\	\	\	\	connection \= DriverManager\.getConnection\(\&quot;jdbc\:mysql\:\/\/210\.94\.181\.91\:3306\/user_DB\&quot;\+\&quot;\?useSSL\=false\&quot;\,\&quot;kyjy\&quot;\,\&quot;leme4487\&quot;\)\;\n\n\	\	\	\	\	System\.out\.println\(\&quot;Connection Success\&quot;\)\;\n\	\	\	\	\	st \= connection\.createStatement\(\)\;\n\n\	\	\	\	\	\/\/System\.out\.println\(\&quot;check flag 1\&quot;\)\;\n\	\	\	\	\	String sql\;\n\	\	\	\	\	sql \= \&quot;select \* FROM user_info\;\&quot;\;\n\n\	\	\	\	\	ResultSet rs \= st\.executeQuery\(sql\)\;\n\	\	\	\	\	String sqlRecipeProcess\=\&quot;\&quot;\;\n\	\	\	\	\	while \(rs\.next\(\)\) \{\n\	\	\	\	\	\	sqlRecipeProcess \= rs\.getString\(\&quot;IP\&quot;\)\;\n\	\	\	\	\	\}\n\n\	\	\	\	\	System\.out\.println\(sqlRecipeProcess\)\;\n\	\	\	\	\	rs\.close\(\)\;\n\	\	\	\	\	st\.close\(\)\;\n\	\	\	\	\	connection\.close\(\)\;\n\	\	\	\	\}\n\	\	\	\	catch\(SQLException se1\)\n\	\	\	\	\{\n\	\	\	\	\	se1\.printStackTrace\(\)\;\n\	\	\	\	\}\n\	\	\	\	catch\(Exception ex\)\n\	\	\	\	\{\n\	\	\	\	\	ex\.printStackTrace\(\)\;\n\	\	\	\	\}finally \{\n\	\	\	\	\	try \{\n\	\	\	\	\	\	if\(connection \!\= null\)\n\	\	\	\	\	\	\{\n\	\	\	\	\	\	\	connection\.close\(\)\;\n\	\	\	\	\	\	\}\n\	\	\	\	\	\}catch\(Exception ex\)\n\	\	\	\	\	\{\}\n\	\	\	\	\}\n\	\	\	\	tetris\.user_Login\(\)\;\n\	\	\	\	tetris\.go_menu\(\)\;\n\	\	\	\} else \{\n\	\	\	\	JOptionPane\.showMessageDialog\(null\, \&quot;Check your ID or Password\!\&quot;\)\;\n\	\	\	\}\n\	\	\} else if \(e\.getSource\(\) \=\= btnJoin\) \{\n\	\	\	try \{\n\	\	\	\	Desktop\.getDesktop\(\)\.browse\(new URI\(\&quot;http\:\/\/icpc\.dongguk\.ac\.kr\/OSSP\/main\.php\&quot;\)\)\;\n\	\	\	\} catch \(IOException \| URISyntaxException e2\) \{\n\	\	\	\	e2\.printStackTrace\(\)\;\n\	\	\	\}\n\	\	\} else if \(e\.getSource\(\) \=\= btnExit\) \{\n\n\	\	\	if \(client \!\= null\) \{\n\	\	\	\	if \(tetris\.isNetwork\(\)\) \{\n\	\	\	\	\	client\.closeNetwork\(tetris\.isServer\(\)\)\;\n\	\	\	\	\}\n\	\	\	\} else \{\n\	\	\	\	System\.exit\(0\)\;\n\	\	\	\}\n\n\	\	\}\n\	\}\n\n\	\@Override\n\	public void mouseClicked\(MouseEvent arg0\) \{\n\	\}\n\n\	\@Override\n\	public void mouseEntered\(MouseEvent arg0\) \{\n\	\}\n\n\	\@Override\n\	public void mouseExited\(MouseEvent arg0\) \{\n\	\}\n\n\	\@Override\n\	public void mousePressed\(MouseEvent arg0\) \{\n\	\}\n\n\	\@Override\n\	public void mouseReleased\(MouseEvent arg0\) \{\n\	\}\n\n\	\@Override\n\	public void keyPressed\(KeyEvent e\) \{\n\	\	if \(e\.getKeyCode\(\) \=\= KeyEvent\.VK_ENTER\) \{\n\	\	\	id \= id_area\.getText\(\)\;\n\	\	\	pw \= pw_area\.getText\(\)\;\n\	\	\	if \(client \=\= null \&amp;\&amp; \!id\.equals\(\&quot;\&quot;\) \&amp;\&amp; \!pw\.equals\(\&quot;\&quot;\)\) \{\n\	\	\	\	tetris\.go_menu\(\)\;\n\	\	\	\} else \{\n\	\	\	\}\n\	\	\}\n\	\}\n\n\	\@Override\n\	public void keyReleased\(KeyEvent arg0\) \{\n\	\}\n\n\	\@Override\n\	public void keyTyped\(KeyEvent arg0\) \{\n\	\}\n\n\	\@Override\n\	public void run\(\) \{\n\	\}\n\}\n</find>
+      <find>score</find>
+      <find>nickname</find>
+      <find>th</find>
+      <find>window</find>
+      <find>getmsg</find>
+      <find>play</find>
+      <find>start</find>
+    </findStrings>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/com/tetris/network/DataShip.java" />
+        <option value="$PROJECT_DIR$/src/com/tetris/window/TetrisBoard.java" />
+        <option value="$USER_HOME$/Desktop/tetris/window/Tetris.java" />
+        <option value="$PROJECT_DIR$/src/com/tetris/network/GameServer.java" />
+        <option value="$PROJECT_DIR$/src/com/tetris/window/Tetris.java" />
+        <option value="$PROJECT_DIR$/src/com/tetris/window/SinglePlay.java" />
+        <option value="$PROJECT_DIR$/src/com/tetris/window/MultiPlay.java" />
+        <option value="$PROJECT_DIR$/src/com/tetris/window/MessageArea.java" />
+        <option value="$PROJECT_DIR$/src/com/tetris/window/Menu.java" />
+        <option value="$PROJECT_DIR$/src/com/tetris/window/Login.java" />
+        <option value="$PROJECT_DIR$/src/com/tetris/network/GameClient.java" />
+        <option value="$PROJECT_DIR$/src/com/tetris/classes/Block.java" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-10" />
+    <option name="width" value="980" />
+    <option name="height" value="1040" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Tetris" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Tetris" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Tetris" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Tetris" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Tetris" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Tetris" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="tetris" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Tetris" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Tetris" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="tetris" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Tetris" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Tetris" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="tetris" type="462c0819:PsiDirectoryNode" />
+              <item name="network" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="AndroidView" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Algorithm_Project" />
+    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.proportion" value="0.15429688" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="TetrisMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.tetris.main.TetrisMain" />
+      <module name="Tetris" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.tetris.main.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <properties />
+      <listeners />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.TetrisMain" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4fdb9edd-1122-44c2-bd2d-cf0dae09a9c7" name="Default" comment="" />
+      <created>1527556525155</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1527556525155</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <layout>
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.32827586" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info id="Image Layers" order="2" />
+      <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" weight="0.32965517" />
+      <window_info anchor="right" id="Maven Projects" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.27448276" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32965517" />
+      <window_info id="Capture Tool" order="6" />
+      <window_info id="Designer" order="3" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16341145" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info id="UI Designer" order="4" />
+      <window_info anchor="right" id="Theme Preview" order="5" />
+      <window_info id="Favorites" order="5" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32965517" />
+    </layout>
+    <layout-to-restore>
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.27448276" />
+      <window_info anchor="right" id="Theme Preview" order="5" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.37418514" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info id="Image Layers" order="2" />
+      <window_info id="Designer" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32965517" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32965517" />
+      <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Version Control" order="9" show_stripe_button="false" />
+      <window_info id="Capture Tool" order="6" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.32827586" />
+      <window_info anchor="right" id="Maven Projects" order="6" />
+      <window_info id="Favorites" order="5" side_tool="true" />
+    </layout-to-restore>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="4" />
+    </breakpoint-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/com/tetris/window/Tetris.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3287">
+          <caret line="202" column="38" selection-start-line="202" selection-start-column="38" selection-end-line="202" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tetris/window/SystemMessageArea.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tetris/window/MessageArea.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tetris/window/Menu.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="26" column="13" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tetris/controller/TetrisController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="19" column="39" selection-start-line="19" selection-start-column="39" selection-end-line="19" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tetris/window/Login.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tetris/window/SinglePlay.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tetris/main/TetrisMain.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="9" column="1" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tetris/window/MultiPlay.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="11666">
+          <caret line="614" column="13" selection-start-line="614" selection-start-column="13" selection-end-line="614" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tetris/window/Tetris.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3135">
+          <caret line="165" column="101" selection-start-line="165" selection-start-column="101" selection-end-line="165" selection-end-column="101" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tetris/window/SystemMessageArea.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tetris/window/SinglePlay.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1596">
+          <caret line="113" column="58" lean-forward="true" selection-start-line="113" selection-start-column="58" selection-end-line="113" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tetris/window/MessageArea.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tetris/window/Menu.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="26" column="13" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tetris/controller/TetrisController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="19" column="39" selection-start-line="19" selection-start-column="39" selection-end-line="19" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tetris/window/Login.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1615">
+          <caret line="118" column="35" selection-start-line="118" selection-start-column="35" selection-end-line="118" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tetris/main/TetrisMain.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="9" column="1" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tetris/window/Login.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2242">
+          <caret line="118" column="35" lean-forward="true" selection-start-line="118" selection-start-column="35" selection-end-line="118" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tetris/window/MultiPlay.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1463">
+          <caret line="77" column="36" lean-forward="true" selection-start-line="77" selection-start-column="36" selection-end-line="77" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tetris/main/TetrisMain.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="9" column="1" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tetris/controller/TetrisController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="361">
+          <caret line="19" column="39" lean-forward="true" selection-start-line="19" selection-start-column="39" selection-end-line="19" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tetris/window/Tetris.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1330">
+          <caret line="70" column="32" lean-forward="true" selection-start-line="70" selection-start-column="32" selection-end-line="70" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tetris/window/MultiPlay.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1957">
+          <caret line="103" selection-start-line="103" selection-end-line="103" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk-9.0.4/lib/src.zip!/java.desktop/javax/swing/event/ChangeListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="817">
+          <caret line="43" lean-forward="true" selection-start-line="43" selection-end-line="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk-9.0.4/lib/src.zip!/java.desktop/javax/swing/event/ChangeListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="43" selection-start-line="43" selection-end-line="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk-9.0.4/lib/src.zip!/java.desktop/javax/swing/ImageIcon.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="216" selection-start-line="216" selection-end-line="216" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk-9.0.4/lib/src.zip!/java.desktop/java/awt/Component.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3135">
+          <caret line="245" column="11" lean-forward="true" selection-start-line="245" selection-start-column="11" selection-end-line="245" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk-9.0.4/lib/src.zip!/java.desktop/javax/swing/JComponent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="4362" column="45" lean-forward="true" selection-start-line="4362" selection-start-column="45" selection-end-line="4362" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tetris/main/TetrisMain.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="9" column="1" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Documents/2018-1-OSSP-KangYangJungKangYang-1/Menu.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-57" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tetris.iml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$USER_HOME$/Desktop/tetris/window/MultiPlay.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="155">
+          <caret line="853" column="42" lean-forward="true" selection-start-line="853" selection-start-column="42" selection-end-line="853" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk-9.0.4/lib/src.zip!/java.desktop/java/awt/EventDispatchThread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="158">
+          <caret line="198" selection-start-line="198" selection-end-line="198" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Desktop/tetris/window/Tetris.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="289" column="23" lean-forward="true" selection-start-line="289" selection-start-column="23" selection-end-line="289" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk-9.0.4/lib/src.zip!/java.base/java/io/FileReader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="646">
+          <caret line="57" selection-start-line="57" selection-end-line="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk-9.0.4/lib/src.zip!/java.base/java/io/FileInputStream.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="158">
+          <caret line="93" selection-start-line="93" selection-end-line="93" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk-9.0.4/lib/src.zip!/java.base/java/io/ObjectOutputStream.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="166">
+          <caret line="342" column="22" selection-start-line="342" selection-start-column="22" selection-end-line="342" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk-9.0.4/lib/src.zip!/java.base/java/lang/Thread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="462">
+          <caret line="843" selection-start-line="843" selection-end-line="843" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tetris/network/GameServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4883">
+          <caret line="264" column="13" selection-start-line="264" selection-start-column="13" selection-end-line="264" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tetris/window/Tetris.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="818">
+          <caret line="363" column="32" lean-forward="true" selection-start-line="363" selection-start-column="32" selection-end-line="363" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tetris/window/SystemMessageArea.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tetris/window/SinglePlay.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1987">
+          <caret line="224" column="57" selection-start-line="224" selection-start-column="57" selection-end-line="224" selection-end-column="57" />
+          <folding>
+            <element signature="e#19522#19523#0" expanded="true" />
+            <element signature="e#19548#19549#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tetris/window/MultiPlay.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="39" column="30" lean-forward="true" selection-start-line="39" selection-start-column="30" selection-end-line="39" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tetris/window/MessageArea.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="874">
+          <caret line="54" column="57" selection-start-line="54" selection-start-column="57" selection-end-line="54" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tetris/window/Menu.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="35">
+          <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tetris/window/Login.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tetris/network/GameClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="56">
+          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+          <folding>
+            <element signature="e#805#806#0" expanded="true" />
+            <element signature="e#834#835#0" expanded="true" />
+            <element signature="e#5444#5445#0" expanded="true" />
+            <element signature="e#5475#5476#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tetris/network/DataShip.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="874">
+          <caret line="46" column="20" selection-start-line="46" selection-start-column="20" selection-end-line="46" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tetris/controller/TetrisController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-304">
+          <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tetris/classes/Block.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tetris/classes/TetrisBlock.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="67" column="7" lean-forward="true" selection-start-line="67" selection-start-column="7" selection-end-line="67" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <last-edited>Tetris:jar</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.5" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>9</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>Tetris</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.6" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>9</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>mysql-connector-java-8.0.11</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
