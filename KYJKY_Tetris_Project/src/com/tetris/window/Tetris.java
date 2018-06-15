@@ -290,8 +290,6 @@ public class Tetris extends JFrame implements ActionListener {
                     Other_IP = rs.getString(1);
                 }
 
-                System.out.println(Other_IP);
-
                 if(Other_IP == "") { // Waiting Player is not exist
                     JOptionPane.showMessageDialog(null, "현재 방을 개설한 사람이 없습니다.");
 
@@ -306,13 +304,13 @@ public class Tetris extends JFrame implements ActionListener {
                 else { // Waiting Player is exist
                     JOptionPane.showMessageDialog(null, "상대방이 검색 되었습니다.");
 
-                    client = new GameClient(this,  login.getIp(), 9500, login.getId());
+                    client = new GameClient(this,  Other_IP, 9500, "Other");
 
                     Thread.sleep((100));
 
                     if (client.start()) {
                         multi.setClient(client);
-                        multi.startNetworking(Other_IP, 9500, "Other");
+                        multi.startNetworking(login.getIp(), 9500, login.getId());
                         isNetwork = true;
                     }
                     else {
