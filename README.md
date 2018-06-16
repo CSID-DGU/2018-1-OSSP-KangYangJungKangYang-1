@@ -1,8 +1,6 @@
 # KYJKY Tetris Project
-=================
 
 ## Team Member
-=================
 1조 강양중강양 (KangYangJungKangYang)
 
 김강민 (Kim Kang Min)
